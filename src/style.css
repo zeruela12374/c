@@ -173,10 +173,24 @@ section h2 {
 
 .course-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	grid-template-columns: repeat(3, 1fr);
 	gap: 30px;
 	max-width: 1200px;
 	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* Estilo específico para as últimas duas cards */
+.course-grid .course-card:nth-last-child(-n+2) {
+	grid-column: span 1;
+}
+
+/* Centralizar as últimas duas cards quando houver espaço */
+@media (min-width: 1200px) {
+	.course-grid .course-card:nth-last-child(-n+2) {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 .course-card {
@@ -189,6 +203,8 @@ section h2 {
 	flex-direction: column;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 	position: relative;
+	max-width: 380px;
+	margin: 0 auto;
 }
 
 .course-card:hover {
@@ -376,7 +392,13 @@ footer {
 	font-size: 0.9rem;
 }
 
-/* Responsividade básica para o menu */
+/* Responsividade */
+@media (max-width: 1024px) {
+	.course-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
 @media (max-width: 768px) {
 	header .container {
 		flex-direction: column;
