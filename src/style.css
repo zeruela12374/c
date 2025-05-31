@@ -145,6 +145,7 @@ header nav ul li a:hover {
 .hero h2 {
 	font-size: 2.5rem;
 	margin-bottom: 1rem;
+	color: #fff;
 }
 
 .hero p {
@@ -167,20 +168,23 @@ section h2 {
 /* Seção de Cursos */
 .courses-section {
 	background-color: #f7f8f5;
+	padding: 4rem 0;
 }
 
 .course-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-	gap: 20px;
+	gap: 30px;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
 .course-card {
 	background: #fff;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+	border: 1px solid #e0e0e0;
+	border-radius: 10px;
 	overflow: hidden;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 	display: flex;
 	flex-direction: column;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -188,14 +192,14 @@ section h2 {
 }
 
 .course-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+	transform: translateY(-10px);
+	box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
 .course-card .image-container {
 	position: relative;
 	overflow: hidden;
-	height: 180px;
+	height: 200px;
 }
 
 .course-card img {
@@ -210,7 +214,7 @@ section h2 {
 }
 
 .course-card .course-info {
-	padding: 15px;
+	padding: 20px;
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
@@ -221,8 +225,9 @@ section h2 {
 }
 
 .course-card h3 {
-	font-size: 1.3rem;
+	font-size: 1.4rem;
 	color: #2e3d28;
+	margin-bottom: 10px;
 	transition: color 0.3s ease;
 }
 
@@ -232,23 +237,30 @@ section h2 {
 
 .course-card .course-category {
 	font-size: 0.9rem;
-	color: #777;
-	margin-bottom: 10px;
-	background-color: #e0e2d4;
-	padding: 3px 8px;
-	border-radius: 3px;
-	align-self: flex-start;
-	transition: background-color 0.3s ease;
+	color: #666;
+	margin-bottom: 12px;
+	background-color: #f0f2e6;
+	padding: 5px 12px;
+	border-radius: 15px;
+	display: inline-block;
+	transition: all 0.3s ease;
 }
 
 .course-card:hover .course-category {
 	background-color: #d4e157;
+	color: #333;
 }
 
 .course-card p {
-	font-size: 0.95rem;
-	margin-bottom: 15px;
-	flex-grow: 1;
+	font-size: 1rem;
+	margin-bottom: 20px;
+	color: #666;
+	line-height: 1.6;
+}
+
+.course-card .btn {
+	align-self: flex-start;
+	margin-top: auto;
 }
 
 /* Seção Sobre */
@@ -396,5 +408,10 @@ footer {
 
 	.header-actions .btn {
 		width: 80%;
+	}
+
+	.course-grid {
+		grid-template-columns: 1fr;
+		padding: 0 20px;
 	}
 }
