@@ -1,50 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma de Cursos Online - Estudo</title>
-	<link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
-	</head>
+</head>
 <body>
-	<header>
-    	<div class="container">
-        	<div class="logo">
-                <h1><a href="#">Capacita TG</a></h1>
-            </div>
-            <div class="logo">
-                <h1>
-                <img src="/src/imgs/78-788550_exercito-brasileiro-logo-vector-oração-do-combatente-aeromovel-removebg-preview.png" alt="Símbolo do Exército Brasileiro" style="height: 40px; vertical-align: middle; margin-right: 10px;">
-                </h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#cursos">Cadastre-se</a></li>
-                    <li><a href="#sobre">Sobre Nós</a></li>
-                    <li><a href="#noticias">Notícias</a></li>
-                    <li><a href="#parceiros">Parceiros</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
-        	<div class="header-actions">
-                <input type="search" placeholder="Pesquisar...">
-                <button class="btn btn-login">Login</button>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-branding">
+                        <img src="/src/imgs/78-788550_exercito-brasileiro-logo-vector-oração-do-combatente-aeromovel-removebg-preview.png" 
+                             alt="Símbolo do Exército Brasileiro" 
+                             class="logo-military">
+                        <h1><a href="#">Capacita TG</a></h1>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="#cursos" class="nav-link">Cadastre-se</a></li>
+                            <li><a href="#sobre" class="nav-link">Sobre Nós</a></li>
+                            <li><a href="#noticias" class="nav-link">Notícias</a></li>
+                            <li><a href="#parceiros" class="nav-link">Parceiros</a></li>
+                            <li><a href="#contato" class="nav-link">Contato</a></li>
+                        </ul>
+                    </nav>
                 </div>
+                
+                <div class="header-right">
+                    <div class="header-actions">
+                        <div class="search-container">
+                            <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
+                        </div>
+                        <button class="btn btn-login">Login</button>
+                    </div>
+                </div>
+            </div>
         </div>
-	</header>
- 
-	<main>
-    	<section class="hero">
-        	<div class="container">
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
                 <h2>Garanta o Futuro da sua Instituição!</h2>
                 <p>Encontre os melhores funcionários.</p>
                 <a href="#cursos" class="btn btn-primary">Saiba Mais</a>
             </div>
         </section>
- 
-    	<section id="cursos" class="courses-section">
-        	<div class="container">
+
+        <section id="cursos" class="courses-section">
+            <div class="container">
                 <h2>Nossos Programas de Carreira</h2>
                 <div class="course-grid">
                     <div class="course-card">
@@ -53,57 +61,59 @@
                         </div>
                         <div class="course-info">
                             <h3>Meu Primeiro Emprego</h3>
-                        	<p class="course-category">Iniciando sua Carreira</p>
+                            <p class="course-category">Iniciando sua Carreira</p>
                             <p>Orientação e preparação para ingressar no mercado de trabalho.</p>
-                        	<a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            <a href="#" class="btn btn-secondary">Saiba Mais</a>
                         </div>
                     </div>
- 
+
                     <div class="course-card">
                         <div class="image-container">
                             <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg" alt="Profissionais em reunião">
                         </div>
                         <div class="course-info">
                             <h3>Novo Emprego</h3>
-                        	<p class="course-category">Transição de Carreira</p>
+                            <p class="course-category">Transição de Carreira</p>
                             <p>Estratégias para conquistar novas oportunidades profissionais.</p>
-                        	<a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            <a href="#" class="btn btn-secondary">Saiba Mais</a>
                         </div>
                     </div>
- 
+
                     <div class="course-card">
                         <div class="image-container">
                             <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="Profissional em desenvolvimento">
                         </div>
                         <div class="course-info">
                             <h3>Ascensão Profissional</h3>
-                        	<p class="course-category">Desenvolvimento de Carreira</p>
+                            <p class="course-category">Desenvolvimento de Carreira</p>
                             <p>Aprimoramento de habilidades para crescimento profissional.</p>
-                        	<a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            <a href="#" class="btn btn-secondary">Saiba Mais</a>
                         </div>
                     </div>
                     
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg" alt="Empreendedor em seu negócio">
+                    <div class="special-cards-container">
+                        <div class="course-card">
+                            <div class="image-container">
+                                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg" alt="Empreendedor em seu negócio">
+                            </div>
+                            <div class="course-info">
+                                <h3>Empreendedorismo</h3>
+                                <p class="course-category">Gestão de Negócios</p>
+                                <p>Fundamentos para iniciar e gerir seu próprio negócio.</p>
+                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            </div>
                         </div>
-                        <div class="course-info">
-                            <h3>Empreendedorismo</h3>
-                        	<p class="course-category">Gestão de Negócios</p>
-                            <p>Fundamentos para iniciar e gerir seu próprio negócio.</p>
-                        	<a href="#" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
-                    </div>
 
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="Planejamento financeiro">
-                        </div>
-                        <div class="course-info">
-                            <h3>Educação Financeira</h3>
-                        	<p class="course-category">Gestão Financeira</p>
-                            <p>Aprenda a gerenciar suas finanças e investimentos.</p>
-                        	<a href="#" class="btn btn-secondary">Saiba Mais</a>
+                        <div class="course-card">
+                            <div class="image-container">
+                                <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="Planejamento financeiro">
+                            </div>
+                            <div class="course-info">
+                                <h3>Educação Financeira</h3>
+                                <p class="course-category">Gestão Financeira</p>
+                                <p>Aprenda a gerenciar suas finanças e investimentos.</p>
+                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            </div>
                         </div>
                     </div>
                 </div>
