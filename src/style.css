@@ -1,188 +1,147 @@
 /* Reset e configurações gerais */
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-  }
-  
-  body {
-	font-family: 'Roboto', sans-serif;
-	line-height: 1.6;
-	color: #333;
-	background-color: #f0f1ed;
-	transition: all 0.3s ease;
-  }
-  
-  .container {
-	width: 90%;
-	max-width: 1100px;
-	margin: auto;
-  }
-  
-  /* Header - Versão Aprimorada */
-  header {
-	background: #2e3d28;
-	padding: 1.2rem 0;
-	position: sticky;
-	top: 0;
-	z-index: 100;
-	border-bottom: 3px solid #6b8e23;
-	transition: all 0.3s ease;
-  }
-  
-  .header-content {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 20px;
-  }
-  
-  .header-branding {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	transition: transform 0.3s ease;
-  }
-  
-  .header-branding:hover {
-	transform: scale(1.02);
-  }
-  
-  .logo-military {
-	height: 48px;
-	width: auto;
-	transition: transform 0.4s ease;
-  }
-  
-  .logo-military:hover {
-	transform: rotate(-5deg) scale(1.1);
-  }
-  
-  .header-branding h1 a {
-	font-family: 'PT Serif', serif;
-	font-size: 1.8rem;
-	color: #d4e157;
-	text-decoration: none;
-	letter-spacing: 0.5px;
-	transition: all 0.3s ease;
-  }
-  
-  .header-branding h1 a:hover {
-	color: #cddc39;
-	text-shadow: 0 0 8px rgba(205, 220, 57, 0.6);
-  }
-  
-  /* Navegação com Sublinhado Ajustado */
-  .main-nav ul {
-	display: flex;
-	gap: 25px;
-	list-style: none;
-  }
-  
-  .nav-link {
-	color: #fff;
-	padding: 8px 0;
-	font-weight: 500;
-	text-decoration: none;
-	position: relative;
-	display: inline-block;
-	transition: color 0.3s ease;
-  }
-  
-  .nav-link::after {
-	content: '';
-	position: absolute;
-	width: 0;
-	height: 3px;
-	bottom: 2px;
-	left: 0;
-	background-color: #cddc39;
-	transition: width 0.3s ease, opacity 0.3s ease;
-	border-radius: 2px;
-	z-index: 110;
-  }
-  
-  .nav-link:hover {
-	color: #cddc39;
-  }
-  
-  .nav-link:hover::after {
-	width: 100%;
-  }
-  
-  /* Botões e busca com animações */
-  .header-actions {
-	display: flex;
-	align-items: center;
-	gap: 15px;
-  }
-  
-  .search-container {
-	position: relative;
-	transition: transform 0.3s ease;
-  }
-  
-  .search-container:hover {
-	transform: scale(1.03);
-  }
-  
-  .search-container input {
-	padding: 10px 15px;
-	width: 180px;
-	border-radius: 25px;
-	border: none;
-	background: rgba(255, 255, 255, 0.9);
-	transition: all 0.3s ease;
-  }
-  
-  .search-container input:focus {
-	width: 220px;
-	box-shadow: 0 0 10px rgba(205, 220, 57, 0.5);
-	outline: none;
-  }
-  
-  .btn-login {
-	background-color: transparent;
-	color: #fff;
-	border: 2px solid #fff;
-	padding: 8px 20px;
-	border-radius: 25px;
-	font-weight: 500;
-	cursor: pointer;
-	transition: all 0.3s ease;
-  }
-  
-  .btn-login:hover {
-	background-color: #fff;
-	color: #2e3d28;
-	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Seção Hero com animação */
-  .hero {
-	background: #3a4217;
-	color: #fff;
-	padding: 4rem 0;
-	text-align: center;
-	transition: all 0.5s ease;
-  }
-  
-  .hero:hover {
-	background: #2e3d28;
-  }
-  
-  .hero h2 {
-	font-size: 2.5rem;
-	margin-bottom: 1rem;
-	transition: text-shadow 0.3s ease;
-  }
-  
-  .hero:hover h2 {
-	text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-  }
-  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f0f1ed;
+    transition: all 0.3s ease;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Header - Versão Aprimorada */
+header {
+    background: #2e3d28;
+    padding: 1.2rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid #6b8e23;
+    transition: all 0.3s ease;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-branding {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.3s ease;
+}
+
+.header-branding:hover {
+    transform: scale(1.02);
+}
+
+.logo-military {
+    height: 48px;
+    width: auto;
+    transition: transform 0.4s ease;
+}
+
+.logo-military:hover {
+    transform: rotate(-5deg) scale(1.1);
+}
+
+.header-branding h1 a {
+    font-family: 'PT Serif', serif;
+    font-size: 1.8rem;
+    color: #d4e157;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.header-branding h1 a:hover {
+    color: #cddc39;
+    text-shadow: 0 0 8px rgba(205, 220, 57, 0.6);
+}
+
+/* Navegação com Sublinhado Ajustado */
+.main-nav ul {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+}
+
+.nav-link {
+    color: #fff;
+    padding: 8px 0;
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 2px;
+    left: 0;
+    background-color: #cddc39;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    border-radius: 2px;
+    z-index: 110;
+}
+
+.nav-link:hover {
+    color: #cddc39;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Botões e busca com animações */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-container {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.search-container:hover {
+    transform: scale(1.03);
+}
+
+.search-container input {
+    padding: 10px 15px;
+    width: 180px;
+    border-radius: 25px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    width: 220px;
+    box-shadow: 0 0 10px rgba(205, 220, 57, 0.5);
+    outline: none;
+}
+
 /* Botões */
 .btn {
     display: inline-block;
@@ -279,7 +238,57 @@ section h2 {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    color: #ffffff;
+    color: #2e3d28;
+}
+
+/* About Section */
+.about-section {
+    background-color: #f7f8f5;
+    padding: 4rem 0;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text {
+    text-align: center;
+}
+
+.about-image-top {
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.about-image-left {
+    margin-bottom: 30px;
+}
+
+.about-img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #333;
+    text-align: justify;
+    padding: 0 15px;
+}
+
+.about-text p strong {
+    color: #2e3d28;
+    font-weight: 700;
 }
 
 /* Seção de Cursos */
@@ -391,18 +400,6 @@ section h2 {
 }
 
 /* Outras Seções */
-.about-section {
-    background-color: #e9ecef;
-}
-
-.about-section p {
-    text-align: justify;
-    margin-bottom: 1rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .news-section {
     background-color: #fff;
 }
@@ -550,6 +547,10 @@ footer {
     .course-card .btn {
         width: 100%;
     }
+
+    .about-text p {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -585,5 +586,9 @@ footer {
     .footer-col {
         min-width: 100%;
         text-align: center;
+    }
+
+    .about-text p {
+        font-size: 0.9rem;
     }
 }
