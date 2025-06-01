@@ -10,7 +10,7 @@
 	line-height: 1.6;
 	color: #333;
 	background-color: #f0f1ed;
-	transition: all 0.3s ease; /* Transição global suave */
+	transition: all 0.3s ease;
   }
   
   .container {
@@ -52,7 +52,6 @@
   .logo-military {
 	height: 48px;
 	width: auto;
-	filter: brightness(0) invert(1);
 	transition: transform 0.4s ease;
   }
   
@@ -91,7 +90,6 @@
 	transition: color 0.3s ease;
   }
   
-  /* Efeito de underline ajustado */
   .nav-link::after {
 	content: '';
 	position: absolute;
@@ -226,13 +224,17 @@
 /* Botões */
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 1rem;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: 25px;
+    transition: all 0.3s ease;
     text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
@@ -242,15 +244,39 @@
 
 .btn-primary:hover {
     background-color: #3a4217;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
     background-color: #6b8e23;
     color: white;
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #556b2f;
+    transition: width 0.3s ease;
+    z-index: -1;
+    border-radius: 23px;
+}
+
+.btn-secondary:hover::before {
+    width: 100%;
 }
 
 .btn-secondary:hover {
-    background-color: #556b2f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(107, 142, 35, 0.3);
+    border-color: #556b2f;
 }
 
 .btn-login {
@@ -324,19 +350,23 @@ section h2 {
 .course-card {
     background: #fff;
     border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-	transition: all 0.3s ease, transform 0.5s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .course-card:hover {
-	transform: translateY(-10px) scale(1.02);
-  }
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
 
 .course-card .image-container {
     height: 200px;
     overflow: hidden;
+    position: relative;
 }
 
 .course-card img {
@@ -355,6 +385,7 @@ section h2 {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background: linear-gradient(to bottom, #fff 0%, #f9f9f9 100%);
 }
 
 .course-card h3 {
@@ -392,11 +423,12 @@ section h2 {
 }
 
 .course-card .btn {
-    align-self: flex-start;
+    align-self: center;
     margin-top: auto;
+    width: 80%;
 }
 
-/* Outras Seções (mantidas do original) */
+/* Outras Seções */
 .about-section {
     background-color: #e9ecef;
 }
@@ -487,22 +519,35 @@ footer {
 
 /* Responsividade */
 @media (max-width: 992px) {
-	.header-content {
-	  flex-direction: column;
-	  gap: 15px;
-	}
-	
-	.main-nav ul {
-	  flex-wrap: wrap;
-	  justify-content: center;
-	}
-	
-	.header-actions {
-	  width: 100%;
-	  justify-content: center;
-	}
-	
-	.search-container input {
-	  width: 100%;
-	}
-  }
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .special-cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .special-cards-container .course-card {
+        width: 100%;
+    }
+}
