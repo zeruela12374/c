@@ -183,44 +183,6 @@
 	text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
   }
   
-  /* Cards de cursos com animação */
-  .course-card {
-	transition: all 0.3s ease, transform 0.5s ease;
-  }
-  
-  .course-card:hover {
-	transform: translateY(-10px) scale(1.02);
-	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-  
-  .course-card img {
-	transition: transform 0.5s ease;
-  }
-  
-  .course-card:hover img {
-	transform: scale(1.1);
-  }
-  
-  /* Responsividade */
-  @media (max-width: 992px) {
-	.header-content {
-	  flex-direction: column;
-	}
-	
-	.main-nav ul {
-	  flex-wrap: wrap;
-	  justify-content: center;
-	}
-	
-	.header-actions {
-	  width: 100%;
-	  justify-content: center;
-	}
-	
-	.search-container input {
-	  width: 100%;
-	}
-  }
 /* Botões */
 .btn {
     display: inline-block;
@@ -527,6 +489,7 @@ footer {
     .main-nav ul {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 15px;
     }
     
     .header-actions {
@@ -536,10 +499,34 @@ footer {
     
     .search-container input {
         width: 100%;
+        max-width: 300px;
     }
 
     .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .special-cards-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .special-cards-container .course-card {
+        min-width: 280px;
+        flex: 0 1 calc(50% - 15px);
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .course-grid {
         grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
     }
 
     .special-cards-container {
@@ -549,5 +536,54 @@ footer {
 
     .special-cards-container .course-card {
         width: 100%;
+        max-width: 500px;
+    }
+
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .course-card .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-branding h1 a {
+        font-size: 1.5rem;
+    }
+
+    .logo-military {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 6px 0;
+    }
+
+    .hero {
+        padding: 3rem 0;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .course-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .course-card p {
+        font-size: 0.9rem;
+    }
+
+    .footer-col {
+        min-width: 100%;
+        text-align: center;
     }
 }
