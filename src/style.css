@@ -652,5 +652,13 @@ footer {
     .footer-col {
         min-width: 100%;
         text-align: center;
-    }
+    }	
+}
+/* Rolagem suave*/
+html {
+    scroll-behavior: smooth;
+}
+#primeiro {
+  padding-top: 80px;
+  margin-top: -80px;
 }
