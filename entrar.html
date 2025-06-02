@@ -3,11 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacita TG</title>
+    <title>Capacita TG - Login</title>
     <link rel="icon" href="/src/imgs/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos específicos para a página de login */
+        .login-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header img {
+            height: 120px;
+            margin-bottom: 1rem;
+        }
+
+        .login-header h2 {
+            font-family: 'PT Serif', serif;
+            color: #2c5530;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #2c5530;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a7c59;
+            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+        }
+
+        .user-type-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .user-type-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .user-type-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .user-type-label {
+            display: block;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .user-type-option input[type="radio"]:checked + .user-type-label {
+            background: #4a7c59;
+            color: white;
+            border-color: #4a7c59;
+        }
+
+        .user-type-label:hover {
+            border-color: #4a7c59;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .login-footer p {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .login-footer a {
+            color: #4a7c59;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .user-info {
+            margin: 2rem 0;
+        }
+
+        .user-info .form-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-info .form-group label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #2c5530;
+        }
+
+        .user-info .form-group p {
+            margin: 0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .login-form .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .login-form .btn-secondary:hover {
+            background: #5a6268;
+        }
+
         /* Estilos para o botão do header quando logado */
         .btn-login.logged-in {
             background: rgba(255,255,255,0.95) !important;
@@ -147,6 +312,17 @@
         .btn-success:hover {
             background: #218838;
         }
+
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .user-type-container {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -177,7 +353,7 @@
                         <div class="search-container">
                             <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
                         </div>
-                        <button class="btn btn-login" id="headerLoginBtn">Acessar</button>
+                        <button class="btn btn-login" id="headerLoginBtn">Login</button>
                     </div>
                 </div>
             </div>
@@ -185,116 +361,85 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="login-section">
             <div class="container">
-                <h2>Garanta o Futuro da sua Instituição!</h2>
-                <p>Encontre os melhores funcionários.</p>
-                <a href="#cursos" class="btn btn-primary">Saiba Mais</a>
-            </div>
-        </section>
-
-        <section id="cursos" class="courses-section">
-            <div class="container">
-                <h2>Nossos Programas de Carreira</h2>
-                <div class="course-grid">
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg" alt="Jovem profissional em seu primeiro emprego">
-                        </div>
-                        <div class="course-info">
-                            <h3>Meu Primeiro Emprego</h3>
-                            <p class="course-category">Iniciando sua Carreira</p>
-                            <p>Orientação e preparação para ingressar no mercado de trabalho.</p>
-                            <a href="primeiroemprego.html" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
+                <!-- Formulário de Login -->
+                <div class="login-container" id="loginContainer">
+                    <div class="login-header">
+                        <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                             alt="Logo Capacita TG">
+                        <h2>Acesse sua Conta</h2>
+                        <p>Entre para continuar sua jornada profissional</p>
                     </div>
 
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg" alt="Profissionais em reunião">
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
                         </div>
-                        <div class="course-info">
-                            <h3>Novo Emprego</h3>
-                            <p class="course-category">Transição de Carreira</p>
-                            <p>Estratégias para conquistar novas oportunidades profissionais.</p>
-                            <a href="#novo" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
-                    </div>
 
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="Profissional em desenvolvimento">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
                         </div>
-                        <div class="course-info">
-                            <h3>Ascensão Profissional</h3>
-                            <p class="course-category">Desenvolvimento de Carreira</p>
-                            <p>Aprimoramento de habilidades para crescimento profissional.</p>
-                            <a href="#" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
-                    </div>
-                    
-                    <div class="special-cards-container">
-                        <div class="course-card">
-                            <div class="image-container">
-                                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg" alt="Empreendedor em seu negócio">
-                            </div>
-                            <div class="course-info">
-                                <h3>Empreendedorismo</h3>
-                                <p class="course-category">Gestão de Negócios</p>
-                                <p>Fundamentos para iniciar e gerir seu próprio negócio.</p>
-                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
+
+                        <div class="form-group">
+                            <label>Tipo de Usuário</label>
+                            <div class="user-type-container">
+                                <div class="user-type-option">
+                                    <input type="radio" id="atirador" name="tipoUsuario" value="atirador" required>
+                                    <label for="atirador" class="user-type-label">
+                                        Atirador
+                                    </label>
+                                </div>
+                                <div class="user-type-option">
+                                    <input type="radio" id="empregador" name="tipoUsuario" value="empregador" required>
+                                    <label for="empregador" class="user-type-label">
+                                        Empregador
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="course-card">
-                            <div class="image-container">
-                                <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="Planejamento financeiro">
-                            </div>
-                            <div class="course-info">
-                                <h3>Educação Financeira</h3>
-                                <p class="course-category">Gestão Financeira</p>
-                                <p>Aprenda a gerenciar suas finanças e investimentos.</p>
-                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p>Não tem uma conta?</p>
+                        <a href="#cadastro">Cadastre-se aqui</a>
+                        <br><br>
+                        <a href="#esqueci-senha">Esqueceu sua senha?</a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="about-program">
-            <div class="container">
-                <div class="program-content">
-                    <div class="program-image">
-                        <img src="/src/imgs/2.png" 
-                             alt="Imagem principal do programa" 
-                             class="main-image">
+                <!-- Tela de usuário logado -->
+                <div class="login-container" id="loggedInContainer" style="display: none;">
+                    <div class="login-header">
+                        <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                             alt="Logo Capacita TG">
+                        <h2>Bem-vindo de volta!</h2>
+                        <p id="welcomeMessage">Você já está logado no sistema</p>
                     </div>
-                    <div class="program-info">
-                        <div class="program-header">
-                            <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
-                                 alt="Logo pequena" 
-                                 class="small-logo">
-                            <h2>Sobre o Programa</h2>
-                        </div>
-                        <div class="program-description">
-                            <p><strong>O Programa CAPACITA TG ofecere cursos de qualificação profissional gratuitos, de alta qualidade, com certificado e que aproxima de oportunidades de emprego em diversas áreas que demandam do mercado de trabalho, planilhas de controle / auxílio financeiro e diversas oportunidades acerca de empregabilidade.</strong></p>
-                            <p>São cursos de qualificação profissional e empreendedorismo gratuitos e com certificado, planilhas de controle / auxilio financeiro voltados para os atiradores que buscam ingressar no mundo do trabalho, se requalificar em busca de uma nova oportunidade de carreira e para os empreendedores que desejam potencializar seu negócio com bons e qualificados profissionais.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="noticias" class="news-section">
-            <div class="container">
-                <h2>Últimas Notícias</h2>
-                <div class="news-grid">
-                    <!-- News items will be dynamically inserted here -->
-                </div>
-                <div class="news-actions">
-                    <a href="https://www.eb.mil.br/web/noticias" target="_blank" class="btn btn-secondary">Mais Notícias do Exército</a>
-                    <a href="https://web.arapiraca.al.gov.br/category/noticias/" target="_blank" class="btn btn-secondary">Mais Notícias de Arapiraca</a>
+                    <div class="user-info">
+                        <div class="form-group">
+                            <label>Nome:</label>
+                            <p id="userNameDisplay"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail:</label>
+                            <p id="userEmailDisplay"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Usuário:</label>
+                            <p id="userTypeDisplay"></p>
+                        </div>
+                    </div>
+
+                    <div class="login-form">
+                        <button type="button" class="btn btn-primary" id="acessarSistema">Acessar Sistema</button>
+                        <button type="button" class="btn btn-secondary" id="logout">Sair da Conta</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -376,27 +521,6 @@
             </div>
             <div class="modal-actions">
                 <button class="btn btn-primary" id="confirmSystemAccess">Continuar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de login necessário -->
-    <div class="modal-overlay" id="loginRequiredModal">
-        <div class="modal">
-            <div class="modal-header">
-                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
-                     alt="Logo Capacita TG">
-                <h3>Login Necessário</h3>
-                <p>Você precisa estar logado para acessar</p>
-            </div>
-            <div class="modal-content">
-                <p style="text-align: center; color: #6c757d;">
-                    Para acessar esta funcionalidade, você precisa fazer login primeiro.
-                </p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelLogin">Cancelar</button>
-                <button class="btn btn-primary" id="goToLogin">Fazer Login</button>
             </div>
         </div>
     </div>
@@ -497,27 +621,23 @@
 
             document.getElementById('confirmSystemAccess').addEventListener('click', function() {
                 hideModal('systemAccessModal');
+                // Aqui você redirecionaria para a página principal
                 showSuccessModal('Redirecionamento', 'Em desenvolvimento: aqui você seria redirecionado para o dashboard principal.');
-            });
-
-            document.getElementById('cancelLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-            });
-
-            document.getElementById('goToLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-                // Redirecionar para página de login
-                window.location.href = 'entrar.html';
+                // window.location.href = 'dashboard.html';
             });
         }
 
         function checkLoggedInUser() {
             const userData = localStorage.getItem('capacitaTgUser');
+            const headerLoginBtn = document.getElementById('headerLoginBtn');
             
             if (userData) {
                 const user = JSON.parse(userData);
+                showLoggedInScreen(user);
+                // Atualizar botão do header com as informações do usuário
                 updateHeaderButton(user, true);
             } else {
+                showLoginForm();
                 updateHeaderButton(null, false);
             }
         }
@@ -534,16 +654,78 @@
                 `;
                 headerLoginBtn.classList.add('logged-in');
             } else {
-                headerLoginBtn.textContent = 'Acessar';
+                headerLoginBtn.textContent = 'Login';
                 headerLoginBtn.classList.remove('logged-in');
                 headerLoginBtn.style.background = '';
                 headerLoginBtn.style.color = '';
             }
         }
 
+        function showLoginForm() {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('loggedInContainer').style.display = 'none';
+        }
+
+        function showLoggedInScreen(user) {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('loggedInContainer').style.display = 'block';
+            
+            // Preencher informações do usuário
+            document.getElementById('userNameDisplay').textContent = user.nome;
+            document.getElementById('userEmailDisplay').textContent = user.email;
+            document.getElementById('userTypeDisplay').textContent = 
+                user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
+            document.getElementById('welcomeMessage').textContent = 
+                `Olá, ${user.nome.split(' ')[0]}! Você já está logado no sistema.`;
+        }
+
+        // Form submission handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const tipoUsuario = document.querySelector('input[name="tipoUsuario"]:checked').value;
+            
+            const userData = {
+                nome: nome,
+                email: email,
+                tipoUsuario: tipoUsuario,
+                loginDate: new Date().toISOString()
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem('capacitaTgUser', JSON.stringify(userData));
+            
+            // Mostrar tela de logado
+            showLoggedInScreen(userData);
+            
+            // Atualizar botão do header
+            updateHeaderButton(userData, true);
+            
+            // Limpar formulário
+            document.getElementById('loginForm').reset();
+            
+            // Mostrar modal de sucesso
+            showSuccessModal('Login Realizado!', `Bem-vindo(a), ${nome.split(' ')[0]}! Você foi conectado com sucesso.`);
+        });
+
+        // Botão acessar sistema
+        document.getElementById('acessarSistema').addEventListener('click', function() {
+            showModal('systemAccessModal');
+        });
+
+        // Botão logout
+        document.getElementById('logout').addEventListener('click', function() {
+            showModal('logoutConfirmModal');
+        });
+
         function performLogout() {
             // Remover dados do localStorage
             localStorage.removeItem('capacitaTgUser');
+            
+            // Mostrar formulário de login novamente
+            showLoginForm();
             
             // Restaurar botão do header
             updateHeaderButton(null, false);
@@ -563,11 +745,10 @@
                     user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
                 showModal('userProfileModal');
             } else {
-                // Se não estiver logado, mostrar modal de login necessário
-                showModal('loginRequiredModal');
+                // Se não estiver logado, focar no formulário
+                document.getElementById('nome').focus();
             }
         });
     </script>
-    <script type="module" src="/src/js/news.js"></script>
 </body>
 </html>
