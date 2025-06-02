@@ -2,86 +2,130 @@ import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-const NEWS_REFRESH_INTERVAL = 6 * 60 * 60 * 1000; // 6 hours
-
 class NewsManager {
     constructor() {
         this.newsContainer = document.querySelector('.news-grid');
-        this.lastUpdate = null;
+        this.newsCache = new Map();
+        this.currentPage = 1;
+        this.newsPerPage = 4;
     }
 
     async init() {
-        await this.updateNews();
-        setInterval(() => this.updateNews(), NEWS_REFRESH_INTERVAL);
+        try {
+            await this.updateNews();
+            this.setupInfiniteScroll();
+        } catch (error) {
+            console.error('Error initializing news:', error);
+            this.handleError(error);
+        }
     }
 
     async updateNews() {
         try {
-            this.showLoading();
-            const [armyNews, cityNews] = await Promise.all([
-                this.fetchArmyNews(),
-                this.fetchCityNews()
-            ]);
-            
-            const combinedNews = [...armyNews, ...cityNews]
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 3);
+            const response = await axios.get('https://api.eb.mil.br/noticias', {
+                params: {
+                    page: this.currentPage,
+                    per_page: this.newsPerPage
+                }
+            });
 
-            this.renderNews(combinedNews);
-            this.lastUpdate = new Date();
+            const news = response.data;
+            this.displayNews(news);
         } catch (error) {
-            console.error('Error updating news:', error);
-            this.showError();
+            console.error('Error fetching news:', error);
+            this.handleError(error);
+            // Use fallback news if API fails
+            this.displayFallbackNews();
         }
     }
 
-    async fetchArmyNews() {
-        const response = await axios.get('https://www.eb.mil.br/web/noticias/rss');
-        // Process RSS feed data
-        return this.processRSSFeed(response.data);
-    }
-
-    async fetchCityNews() {
-        const response = await axios.get('https://web.arapiraca.al.gov.br/feed/');
-        // Process RSS feed data
-        return this.processRSSFeed(response.data);
-    }
-
-    processRSSFeed(feedData) {
-        // Implementation of RSS feed processing
-        // Returns array of news items with title, description, date, link, and image
-    }
-
-    renderNews(newsItems) {
-        this.newsContainer.innerHTML = newsItems.map(item => `
-            <article class="news-item">
-                <img src="${item.image || 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg'}" 
-                     alt="${item.title}">
-                <div class="news-content">
-                    <span class="news-date">${format(parseISO(item.date), "d 'de' MMMM 'de' yyyy", { locale: ptBR })}</span>
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
-                    <a href="${item.link}" target="_blank" class="btn btn-secondary">Leia Mais</a>
+    displayNews(newsItems) {
+        if (!this.newsContainer) return;
+        
+        newsItems.forEach(news => {
+            if (this.newsCache.has(news.id)) return;
+            
+            const article = document.createElement('article');
+            article.className = 'news-item';
+            
+            article.innerHTML = `
+                <img src="${news.image || 'https://via.placeholder.com/300x150?text=Notícia+Militar'}" 
+                     alt="${news.title}">
+                <h3>${news.title}</h3>
+                <p>${news.summary}</p>
+                <div class="news-meta">
+                    <span class="news-date">
+                        ${format(parseISO(news.publishedAt), "d 'de' MMMM 'de' yyyy", { locale: ptBR })}
+                    </span>
                 </div>
-            </article>
-        `).join('');
+                <a href="${news.url}" target="_blank" rel="noopener noreferrer">Leia Mais</a>
+            `;
+            
+            this.newsContainer.appendChild(article);
+            this.newsCache.set(news.id, true);
+        });
     }
 
-    showLoading() {
-        this.newsContainer.innerHTML = `
-            <div class="loading-news">
-                <p>Carregando notícias...</p>
-            </div>`;
+    displayFallbackNews() {
+        const fallbackNews = [
+            {
+                title: "Exército Brasileiro realiza exercício de adestramento",
+                summary: "Militares participam de treinamento conjunto para aprimorar técnicas de combate e estratégia.",
+                image: "https://images.pexels.com/photos/1236701/pexels-photo-1236701.jpeg",
+                url: "https://www.eb.mil.br"
+            },
+            {
+                title: "Programa de Modernização do Exército avança",
+                summary: "Novos equipamentos e tecnologias são incorporados às forças terrestres brasileiras.",
+                image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg",
+                url: "https://www.eb.mil.br"
+            }
+        ];
+
+        this.displayNews(fallbackNews.map((news, index) => ({
+            ...news,
+            id: `fallback-${index}`,
+            publishedAt: new Date().toISOString()
+        })));
     }
 
-    showError() {
-        this.newsContainer.innerHTML = `
-            <div class="news-error">
-                <p>Não foi possível carregar as notícias. Tente novamente mais tarde.</p>
-            </div>`;
+    handleError(error) {
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'news-error';
+        errorMessage.innerHTML = `
+            <p>Não foi possível carregar as notícias no momento. 
+               Por favor, tente novamente mais tarde.</p>
+        `;
+        
+        if (this.newsContainer.children.length === 0) {
+            this.newsContainer.appendChild(errorMessage);
+        }
+    }
+
+    setupInfiniteScroll() {
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.currentPage++;
+                    this.updateNews();
+                }
+            });
+        }, options);
+
+        const sentinel = document.createElement('div');
+        sentinel.className = 'scroll-sentinel';
+        this.newsContainer.appendChild(sentinel);
+        observer.observe(sentinel);
     }
 }
 
+// Initialize news manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const newsManager = new NewsManager();
     newsManager.init();
