@@ -807,3 +807,95 @@ html {
   padding-top: 80px;
   margin-top: -80px;
 }
+
+/* Enhanced Accessibility */
+:focus {
+    outline: 3px solid #4a7c59;
+    outline-offset: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #2e3d28;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Enhanced Animation Performance */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    header,
+    footer,
+    .btn,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .course-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+    }
+}
+
+/* Enhanced Mobile Navigation */
+@media (max-width: 768px) {
+    .main-nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: #2e3d28;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .main-nav.active {
+        left: 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .nav-link {
+        font-size: 1.2rem;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        z-index: 1001;
+    }
+}
