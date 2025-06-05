@@ -3,28 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Capacita TG - Programa de capacitação profissional para atiradores do Tiro de Guerra. Cursos gratuitos, certificados e oportunidades de emprego.">
-    <title>Capacita TG - Sua jornada de sucesso começa aqui</title>
+    <title>Capacita TG</title>
     <link rel="icon" href="/src/imgs/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="/src/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos para o botão do header quando logado */
+        .btn-login.logged-in {
+            background: rgba(255,255,255,0.95) !important;
+            color: #2c5530 !important;
+            padding: 0.5rem 1rem !important;
+            min-width: 200px;
+            text-align: left;
+            position: relative;
+        }
+
+        .btn-login.logged-in:hover {
+            background: rgba(255,255,255,1) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-info-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .user-name-header {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-type-header {
+            font-size: 0.7rem;
+            color: #6c757d;
+            font-weight: 400;
+        }
+
+        /* Estilos dos Modais */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8) translateY(-50px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header img {
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'PT Serif', serif;
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .modal-header p {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .modal-content {
+            margin-bottom: 2rem;
+        }
+
+        .modal-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-info p {
+            margin: 0.3rem 0;
+            color: #333;
+        }
+
+        .modal-info strong {
+            color: #2c5530;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            max-width: 150px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    <div class="header-branding" id="capacita">
+                    <div class="header-branding">
                         <img src="/src/imgs/78-788550_exercito-brasileiro-logo-vector-oração-do-combatente-aeromovel-removebg-preview.png" 
                              alt="Símbolo do Exército Brasileiro" 
                              class="logo-military">
-                        <h1><a href="index.html">Capacita TG</a></h1>
+                        <h1><a href="#">Capacita TG</a></h1>
                     </div>
                     
                     <nav class="main-nav">
                         <ul>
-                            <li><a href="#cursos" class="nav-link">Cursos</a></li>
-                            <li><a href="#sobre_o_programa" class="nav-link">Sobre Nós</a></li>
+                            <li><a href="#cursos" class="nav-link">Cadastre-se</a></li>
+                            <li><a href="#sobre" class="nav-link">Sobre Nós</a></li>
                             <li><a href="#noticias" class="nav-link">Notícias</a></li>
                             <li><a href="#parceiros" class="nav-link">Parceiros</a></li>
                             <li><a href="#contato" class="nav-link">Contato</a></li>
@@ -37,7 +177,7 @@
                         <div class="search-container">
                             <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
                         </div>
-                        <a href="entrar.html" class="btn btn-primary">Acessar</a>
+                        <button class="btn btn-login" id="headerLoginBtn">Acessar</button>
                     </div>
                 </div>
             </div>
@@ -47,9 +187,9 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h2>Capacitação Profissional Gratuita</h2>
-                <p>Cursos de qualidade com certificado para impulsionar sua carreira</p>
-                <a href="#cursos" class="btn btn-primary">Conheça nossos cursos</a>
+                <h2>Garanta o Futuro da sua Instituição!</h2>
+                <p>Encontre os melhores funcionários.</p>
+                <a href="#cursos" class="btn btn-primary">Saiba Mais</a>
             </div>
         </section>
 
@@ -59,40 +199,63 @@
                 <div class="course-grid">
                     <div class="course-card">
                         <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                                 alt="Jovem profissional em treinamento">
+                            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg" alt="Jovem profissional em seu primeiro emprego">
                         </div>
                         <div class="course-info">
-                            <h3>Primeiro Emprego</h3>
+                            <h3>Jovem Aprendiz/Meu Primeiro Emprego</h3>
                             <p class="course-category">Iniciando sua Carreira</p>
-                            <p>Preparação completa para ingressar no mercado de trabalho.</p>
+                            <p>Orientação e preparação para ingressar no mercado de trabalho.</p>
                             <a href="primeiroemprego.html" class="btn btn-secondary">Saiba Mais</a>
                         </div>
                     </div>
 
                     <div class="course-card">
                         <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                                 alt="Profissionais em reunião">
+                            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg" alt="Profissionais em reunião">
                         </div>
                         <div class="course-info">
-                            <h3>Desenvolvimento Profissional</h3>
-                            <p class="course-category">Aperfeiçoamento</p>
-                            <p>Aprimore suas habilidades e avance na carreira.</p>
+                            <h3>Novo Emprego</h3>
+                            <p class="course-category">Transição de Carreira</p>
+                            <p>Estratégias para conquistar novas oportunidades profissionais.</p>
                             <a href="novoemp.html" class="btn btn-secondary">Saiba Mais</a>
                         </div>
                     </div>
 
                     <div class="course-card">
                         <div class="image-container">
-                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                                 alt="Profissional em desenvolvimento">
+                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="Profissional em desenvolvimento">
                         </div>
                         <div class="course-info">
                             <h3>Empreendedorismo</h3>
                             <p class="course-category">Gestão de Negócios</p>
-                            <p>Aprenda a criar e gerir seu próprio negócio.</p>
+                            <p>Fundamentos para iniciar e gerir seu próprio negócio.</p>
                             <a href="empreend.html" class="btn btn-secondary">Saiba Mais</a>
+                        </div>
+                    </div>
+                    
+                    <div class="special-cards-container">
+                        <div class="course-card">
+                            <div class="image-container">
+                                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg" alt="Empreendedor em seu negócio">
+                            </div>
+                            <div class="course-info">
+                                <h3>Educação Financeira</h3>
+                                <p class="course-category">Gestão Financeira</p>
+                                <p>Aprenda a gerenciar suas finanças e investimentos</p>
+                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="image-container">
+                                <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="Planejamento financeiro">
+                            </div>
+                            <div class="course-info">
+                                <h3>Empresas Parceiras</h3>
+                                <p class="course-category">Cadastro</p>
+                                <p>Cadastre-se para se tornar uma empresa parceira</p>
+                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,21 +271,122 @@
                              class="main-image">
                     </div>
                     <div class="program-info">
-                        <div class="program-header" id="sobre_o_programa">
+                        <div class="program-header">
                             <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
                                  alt="Logo pequena" 
                                  class="small-logo">
                             <h2>Sobre o Programa</h2>
                         </div>
                         <div class="program-description">
-                            <p><strong>O Programa CAPACITA TG oferece cursos de qualificação profissional gratuitos, de alta qualidade, com certificado e aproxima você de oportunidades de emprego em diversas áreas do mercado de trabalho.</strong></p>
-                            <p>São cursos de qualificação profissional e empreendedorismo gratuitos com certificado, voltados para os atiradores que buscam ingressar no mundo do trabalho ou se requalificar em busca de uma nova oportunidade de carreira.</p>
+                            <p><strong>O Programa CAPACITA TG ofecere cursos de qualificação profissional gratuitos, de alta qualidade, com certificado e que aproxima de oportunidades de emprego em diversas áreas que demandam do mercado de trabalho, planilhas de controle / auxílio financeiro e diversas oportunidades acerca de empregabilidade.</strong></p>
+                            <p>São cursos de qualificação profissional e empreendedorismo gratuitos e com certificado, planilhas de controle / auxilio financeiro voltados para os atiradores que buscam ingressar no mundo do trabalho, se requalificar em busca de uma nova oportunidade de carreira e para os empreendedores que desejam potencializar seu negócio com bons e qualificados profissionais.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Modais -->
+    <!-- Modal de perfil do usuário -->
+    <div class="modal-overlay" id="userProfileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                     alt="Logo Capacita TG">
+                <h3>Perfil do Usuário</h3>
+                <p>Suas informações de acesso</p>
+            </div>
+            <div class="modal-content">
+                <div class="modal-info">
+                    <p><strong>Nome:</strong> <span id="modalUserName"></span></p>
+                    <p><strong>Email:</strong> <span id="modalUserEmail"></span></p>
+                    <p><strong>Tipo:</strong> <span id="modalUserType"></span></p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-success" id="modalAcessarSistema">Acessar Sistema</button>
+                <button class="btn btn-danger" id="modalLogout">Fazer Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação de logout -->
+    <div class="modal-overlay" id="logoutConfirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                     alt="Logo Capacita TG">
+                <h3>Confirmar Logout</h3>
+                <p>Tem certeza que deseja sair?</p>
+            </div>
+            <div class="modal-content">
+                <p style="text-align: center; color: #6c757d;">
+                    Você será desconectado do sistema e precisará fazer login novamente.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelLogout">Cancelar</button>
+                <button class="btn btn-danger" id="confirmLogout">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de sucesso -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                     alt="Logo Capacita TG">
+                <h3 id="successTitle">Sucesso!</h3>
+                <p id="successMessage">Operação realizada com sucesso!</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="closeSuccessModal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de acesso ao sistema -->
+    <div class="modal-overlay" id="systemAccessModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                     alt="Logo Capacita TG">
+                <h3>Acessar Sistema</h3>
+                <p>Redirecionando para a área principal</p>
+            </div>
+            <div class="modal-content">
+                <p style="text-align: center; color: #6c757d;">
+                    Você será direcionado para a página principal do sistema Capacita TG.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="confirmSystemAccess">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de login necessário -->
+    <div class="modal-overlay" id="loginRequiredModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/WhatsApp_Image_2025-06-01_at_13.02.44-removebg-preview.png" 
+                     alt="Logo Capacita TG">
+                <h3>Login Necessário</h3>
+                <p>Você precisa estar logado para acessar</p>
+            </div>
+            <div class="modal-content">
+                <p style="text-align: center; color: #6c757d;">
+                    Para acessar esta funcionalidade, você precisa fazer login primeiro.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelLogin">Cancelar</button>
+                <button class="btn btn-primary" id="goToLogin">Fazer Login</button>
+            </div>
+        </div>
+    </div>
 
     <footer id="contato">
         <div class="container">
@@ -135,11 +399,11 @@
                 <div class="footer-col">
                     <h4>Links Rápidos</h4>
                     <ul>
-                        <li><a href="#cursos" class="nav-link">Cursos</a></li>
-                        <li><a href="#sobre_o_programa" class="nav-link">Sobre Nós</a></li>
-                        <li><a href="#noticias" class="nav-link">Notícias</a></li>
-                        <li><a href="#parceiros" class="nav-link">Parceiros</a></li>
-                        <li><a href="#contato" class="nav-link">Contato</a></li>
+                        <li><a href="#cursos">Cadastre-se</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#noticias">Notícias</a></li>
+                        <li><a href="#parceiros">Parceiros</a></li>
+                        <li><a href="#contato">Contato</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -158,6 +422,139 @@
         </div>
     </footer>
 
-    <script type="module" src="/src/js/main.js"></script>
+    <script>
+        // Funções de controle dos modais
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showSuccessModal(title, message) {
+            document.getElementById('successTitle').textContent = title;
+            document.getElementById('successMessage').textContent = message;
+            showModal('successModal');
+        }
+
+        // Verificar se usuário já está logado ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoggedInUser();
+            setupModalEvents();
+        });
+
+        function setupModalEvents() {
+            // Fechar modais clicando no overlay
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        hideModal(overlay.id);
+                    }
+                });
+            });
+
+            // Eventos dos botões dos modais
+            document.getElementById('modalAcessarSistema').addEventListener('click', function() {
+                hideModal('userProfileModal');
+                showModal('systemAccessModal');
+            });
+
+            document.getElementById('modalLogout').addEventListener('click', function() {
+                hideModal('userProfileModal');
+                showModal('logoutConfirmModal');
+            });
+
+            document.getElementById('cancelLogout').addEventListener('click', function() {
+                hideModal('logoutConfirmModal');
+            });
+
+            document.getElementById('confirmLogout').addEventListener('click', function() {
+                hideModal('logoutConfirmModal');
+                performLogout();
+            });
+
+            document.getElementById('closeSuccessModal').addEventListener('click', function() {
+                hideModal('successModal');
+            });
+
+            document.getElementById('confirmSystemAccess').addEventListener('click', function() {
+                hideModal('systemAccessModal');
+                showSuccessModal('Redirecionamento', 'Em desenvolvimento: aqui você seria redirecionado para o dashboard principal.');
+            });
+
+            document.getElementById('cancelLogin').addEventListener('click', function() {
+                hideModal('loginRequiredModal');
+            });
+
+            document.getElementById('goToLogin').addEventListener('click', function() {
+                hideModal('loginRequiredModal');
+                // Redirecionar para página de login
+                window.location.href = 'entrar.html';
+            });
+        }
+
+        function checkLoggedInUser() {
+            const userData = localStorage.getItem('capacitaTgUser');
+            
+            if (userData) {
+                const user = JSON.parse(userData);
+                updateHeaderButton(user, true);
+            } else {
+                updateHeaderButton(null, false);
+            }
+        }
+
+        function updateHeaderButton(user, isLoggedIn) {
+            const headerLoginBtn = document.getElementById('headerLoginBtn');
+            
+            if (isLoggedIn && user) {
+                headerLoginBtn.innerHTML = `
+                    <div class="user-info-header">
+                        <span class="user-name-header">${user.nome.split(' ')[0]} ${user.nome.split(' ')[1] || ''}</span>
+                        <span class="user-type-header">${user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador'}</span>
+                    </div>
+                `;
+                headerLoginBtn.classList.add('logged-in');
+            } else {
+                headerLoginBtn.textContent = 'Acessar';
+                headerLoginBtn.classList.remove('logged-in');
+                headerLoginBtn.style.background = '';
+                headerLoginBtn.style.color = '';
+            }
+        }
+
+        function performLogout() {
+            // Remover dados do localStorage
+            localStorage.removeItem('capacitaTgUser');
+            
+            // Restaurar botão do header
+            updateHeaderButton(null, false);
+            
+            showSuccessModal('Logout Realizado', 'Você foi desconectado com sucesso!');
+        }
+
+        // Clique no botão do header
+        document.getElementById('headerLoginBtn').addEventListener('click', function() {
+            const userData = localStorage.getItem('capacitaTgUser');
+            if (userData) {
+                // Se estiver logado, mostrar modal com informações
+                const user = JSON.parse(userData);
+                document.getElementById('modalUserName').textContent = user.nome;
+                document.getElementById('modalUserEmail').textContent = user.email;
+                document.getElementById('modalUserType').textContent = 
+                    user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
+                showModal('userProfileModal');
+            } else {
+                // Se não estiver logado, mostrar modal de login necessário
+                showModal('loginRequiredModal');
+            }
+        });
+    </script>
+    <script type="module" src="/src/js/news.js"></script>
 </body>
 </html>
