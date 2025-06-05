@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos para o botão do header quando logado */
         .btn-login.logged-in {
             background: rgba(255,255,255,0.95) !important;
             color: #2c5530 !important;
@@ -40,7 +39,6 @@
             font-weight: 400;
         }
 
-        /* Estilos dos Modais */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -185,75 +183,37 @@
     </header>
 
     <section id="cursos" class="courses-section">
-            <div class="container">
-                <h2>Cursos</h2>
-                <div class="course-grid">
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="" alt="Imagem primeiro curso">
-                        </div>
-                        <div class="course-info">
-                            <h3>XXXXXXXXXXX</h3>
-                            <p class="course-category">XXXXXXXXXXXXXXXX</p>
-                            <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-                            <a href="" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
+        <div class="container">
+            <h2>Cursos de Educação Financeira</h2>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="image-container">
+                        <img src="https://images.pexels.com/photos/4386442/pexels-photo-4386442.jpeg" alt="Educação Financeira">
                     </div>
-
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="" alt="Imagem segundo curso">
-                        </div>
-                        <div class="course-info">
-                            <h3>XXXXXXXXXXXXXX</h3>
-                            <p class="course-category">XXXXXXXXXXXXXXXXXXXX</p>
-                            <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-                            <a href="" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
+                    <div class="course-info">
+                        <h3>Educação Financeira</h3>
+                        <p class="course-category">IFRS - 40 horas</p>
+                        <p>Aprenda a gerenciar suas finanças de forma eficiente e consciente.</p>
+                        <a href="https://estude.ifrs.edu.br/cursos/educacao-financeira-2/" target="_blank" class="btn btn-secondary">Saiba Mais</a>
                     </div>
+                </div>
 
-                    <div class="course-card">
-                        <div class="image-container">
-                            <img src="" alt="Imagem terceiro curso">
-                        </div>
-                        <div class="course-info">
-                            <h3>XXXXXXXXXXXXXXXX</h3>
-                            <p class="course-category">XXXXXXXXXXXXXXXXX</p>
-                            <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-                            <a href="" class="btn btn-secondary">Saiba Mais</a>
-                        </div>
+                <div class="course-card">
+                    <div class="image-container">
+                        <img src="https://images.pexels.com/photos/4386339/pexels-photo-4386339.jpeg" alt="Finanças Pessoais">
                     </div>
-                    
-                    <div class="special-cards-container">
-                        <div class="course-card">
-                            <div class="image-container">
-                                <img src="" alt="Imagem quarto curso">
-                            </div>
-                            <div class="course-info">
-                                <h3>XXXXXXXXXXXX</h3>
-                                <p class="course-category">XXXXXXXXXXXXXXXXX</p>
-                                <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="image-container">
-                                <img src="" alt="Imagem quinto curso">
-                            </div>
-                            <div class="course-info">
-                                <h3>XXXXXXXXXXXXX</h3>
-                                <p class="course-category">XXXXXXXXXXXXXXXXXXX</p>
-                                <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-                                <a href="#" class="btn btn-secondary">Saiba Mais</a>
-                            </div>
-                        </div>
+                    <div class="course-info">
+                        <h3>Finanças Pessoais</h3>
+                        <p class="course-category">IFRS - 30 horas</p>
+                        <p>Desenvolva habilidades para melhor gestão do seu dinheiro.</p>
+                        <a href="https://estude.ifrs.edu.br/cursos/financas-pessoais/" target="_blank" class="btn btn-secondary">Saiba Mais</a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer id="contato">
+    <footer id="contato">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
@@ -288,7 +248,6 @@
     </footer>
 
     <script>
-        // Funções de controle dos modais
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.classList.add('active');
@@ -307,14 +266,12 @@
             showModal('successModal');
         }
 
-        // Verificar se usuário já está logado ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
             checkLoggedInUser();
             setupModalEvents();
         });
 
         function setupModalEvents() {
-            // Fechar modais clicando no overlay
             document.querySelectorAll('.modal-overlay').forEach(overlay => {
                 overlay.addEventListener('click', function(e) {
                     if (e.target === overlay) {
@@ -323,7 +280,6 @@
                 });
             });
 
-            // Eventos dos botões dos modais
             document.getElementById('modalAcessarSistema').addEventListener('click', function() {
                 hideModal('userProfileModal');
                 showModal('systemAccessModal');
@@ -358,7 +314,6 @@
 
             document.getElementById('goToLogin').addEventListener('click', function() {
                 hideModal('loginRequiredModal');
-                // Redirecionar para página de login
                 window.location.href = 'entrar.html';
             });
         }
@@ -394,20 +349,14 @@
         }
 
         function performLogout() {
-            // Remover dados do localStorage
             localStorage.removeItem('capacitaTgUser');
-            
-            // Restaurar botão do header
             updateHeaderButton(null, false);
-            
             showSuccessModal('Logout Realizado', 'Você foi desconectado com sucesso!');
         }
 
-        // Clique no botão do header
         document.getElementById('headerLoginBtn').addEventListener('click', function() {
             const userData = localStorage.getItem('capacitaTgUser');
             if (userData) {
-                // Se estiver logado, mostrar modal com informações
                 const user = JSON.parse(userData);
                 document.getElementById('modalUserName').textContent = user.nome;
                 document.getElementById('modalUserEmail').textContent = user.email;
@@ -415,7 +364,6 @@
                     user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
                 showModal('userProfileModal');
             } else {
-                // Se não estiver logado, mostrar modal de login necessário
                 showModal('loginRequiredModal');
             }
         });
