@@ -157,15 +157,34 @@ header {
 
 /* Hero Section */
 .hero {
-    background: #3a4217;
+    background: linear-gradient(rgba(58, 66, 23, 0.85), rgba(46, 61, 40, 0.85)), 
+                url('https://images.pexels.com/photos/4226256/pexels-photo-4226256.jpeg') center/cover no-repeat;
     color: #fff;
     padding: 4rem 0;
     text-align: center;
     transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero:hover {
-    background: #2e3d28;
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    transition: transform 0.5s ease;
+}
+
+.hero:hover::before {
+    transform: scale(1.05);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h2 {
@@ -243,6 +262,7 @@ header {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .course-card:hover {
@@ -254,6 +274,21 @@ header {
     height: 200px;
     overflow: hidden;
     position: relative;
+}
+
+.course-card .image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+}
+
+.course-card:hover .image-container::after {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .course-card img {
