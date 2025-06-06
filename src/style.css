@@ -856,3 +856,58 @@ html {
     padding-top: 80px;
     margin-top: -80px;
 }
+
+.custom-images-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.custom-images-container img {
+    width: 500px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Curva de animação suave */
+    transform: translateY(0) scale(1);
+    filter: brightness(0.95);
+}
+
+.custom-images-container img:hover {
+    transform: translateY(-10px) scale(1.05); /* Levanta e aumenta a imagem */
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    filter: brightness(1);
+    z-index: 10;
+}
+
+/* Efeito de "pulsar" sutil quando carrega */
+@keyframes subtlePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.custom-images-container img {
+    animation: subtlePulse 1.5s ease-in-out 1;
+}
+
+/* Responsividade */
+@media (max-width: 1300px) {
+    .custom-images-container img {
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-images-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .custom-images-container img {
+        width: 100%;
+        max-width: 400px;
+    }
+}
