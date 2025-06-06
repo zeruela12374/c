@@ -14,14 +14,14 @@ body {
 
 .container {
     width: 90%;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: auto;
 }
 
 /* Header */
 header {
     background: #2e3d28;
-    padding: 1.2rem 0;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -34,15 +34,23 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    min-height: 60px;
+    gap: 2rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex: 1;
 }
 
 .header-branding {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 1rem;
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 .header-branding:hover {
@@ -50,22 +58,30 @@ header {
 }
 
 .logo-military {
-    height: 48px;
+    height: 50px;
     width: auto;
     transition: transform 0.4s ease;
+    flex-shrink: 0;
 }
 
 .logo-military:hover {
     transform: rotate(-5deg) scale(1.1);
 }
 
+.brand-center {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .header-branding h1 a {
     font-family: 'PT Serif', serif;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     color: #d4e157;
     text-decoration: none;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .header-branding h1 a:hover {
@@ -73,21 +89,42 @@ header {
     text-shadow: 0 0 8px rgba(205, 220, 57, 0.6);
 }
 
+.logo-secondary {
+    height: 50px;
+    width: auto;
+    transition: transform 0.4s ease;
+    flex-shrink: 0;
+}
+
+.logo-secondary:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
 /* Navigation */
+.main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
 .main-nav ul {
     display: flex;
-    gap: 25px;
+    gap: 2rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-link {
     color: #fff;
-    padding: 8px 0;
+    padding: 0.75rem 0;
     font-weight: 500;
     text-decoration: none;
     position: relative;
     display: inline-block;
     transition: color 0.3s ease;
+    font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .nav-link::after {
@@ -111,10 +148,16 @@ header {
 }
 
 /* Header Actions */
+.header-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 1.5rem;
 }
 
 .search-container {
@@ -123,29 +166,35 @@ header {
 }
 
 .search-container input {
-    padding: 10px 15px;
-    width: 180px;
+    padding: 0.75rem 1.25rem;
+    width: 200px;
     border-radius: 25px;
     border: none;
     background: rgba(255,255,255,0.9);
     transition: all 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .search-container input:focus {
-    width: 220px;
+    width: 240px;
     box-shadow: 0 0 10px rgba(205, 220, 57, 0.5);
     outline: none;
+    background: rgba(255,255,255,1);
 }
 
 .btn-login {
     background-color: transparent;
     color: #fff;
     border: 2px solid #fff;
-    padding: 8px 20px;
+    padding: 0.75rem 1.5rem;
     border-radius: 25px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
 }
 
 .btn-login:hover {
@@ -153,6 +202,38 @@ header {
     color: #2e3d28;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para o botão do header quando logado */
+.btn-login.logged-in {
+    background: rgba(255,255,255,0.95) !important;
+    color: #2c5530 !important;
+    padding: 0.5rem 1rem !important;
+    min-width: 200px;
+    text-align: left;
+    position: relative;
+}
+
+.btn-login.logged-in:hover {
+    background: rgba(255,255,255,1) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.user-info-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.user-name-header {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.user-type-header {
+    font-size: 0.7rem;
+    color: #6c757d;
+    font-weight: 400;
 }
 
 /* Hero Section */
@@ -420,6 +501,114 @@ header {
     font-size: 1.1rem;
 }
 
+/* Estilos dos Modais */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8) translateY(-50px);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header img {
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+    font-family: 'PT Serif', serif;
+    color: #2c5530;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.modal-header p {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+.modal-content {
+    margin-bottom: 2rem;
+}
+
+.modal-info {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.modal-info p {
+    margin: 0.3rem 0;
+    color: #333;
+}
+
+.modal-info strong {
+    color: #2c5530;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-actions .btn {
+    flex: 1;
+    max-width: 150px;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
 /* Footer */
 footer {
     background: #2e3d28;
@@ -488,21 +677,59 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .header-content {
+        gap: 1.5rem;
+    }
+    
+    .header-left {
+        gap: 2rem;
+    }
+    
+    .main-nav ul {
+        gap: 1.5rem;
+    }
+    
+    .search-container input {
+        width: 160px;
+    }
+    
+    .search-container input:focus {
+        width: 200px;
+    }
+}
+
 @media (max-width: 992px) {
     .header-content {
         flex-direction: column;
-        gap: 15px;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    
+    .header-left {
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .main-nav {
+        order: 2;
+    }
+    
+    .header-right {
+        order: 3;
     }
     
     .main-nav ul {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px;
+        gap: 1.5rem;
     }
     
     .header-actions {
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
     
     .course-grid {
@@ -520,6 +747,49 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .header-left {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .brand-center {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .logo-military,
+    .logo-secondary {
+        height: 40px;
+    }
+    
+    .header-branding h1 a {
+        font-size: 1.6rem;
+    }
+    
+    .main-nav ul {
+        gap: 1rem;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+    }
+    
+    .search-container input {
+        width: 140px;
+        padding: 0.6rem 1rem;
+    }
+    
+    .search-container input:focus {
+        width: 180px;
+    }
+    
+    .btn-login {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
     .course-grid {
         grid-template-columns: 1fr;
         max-width: 500px;
@@ -547,15 +817,16 @@ footer {
 
 @media (max-width: 480px) {
     .header-branding h1 a {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
-    .logo-military {
-        height: 40px;
+    .logo-military,
+    .logo-secondary {
+        height: 35px;
     }
 
     .nav-link {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .hero h2 {
@@ -564,6 +835,14 @@ footer {
 
     .course-card h3 {
         font-size: 1.2rem;
+    }
+    
+    .search-container input {
+        width: 120px;
+    }
+    
+    .search-container input:focus {
+        width: 160px;
     }
 }
 
