@@ -352,9 +352,18 @@ header {
 }
 
 .course-card .image-container {
+    display: flex;
+    align-items: flex-start;
     height: 200px;
     overflow: hidden;
     position: relative;
+}
+
+.course-card .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top; /* Alinhamento no topo */
 }
 
 .course-card .image-container::after {
