@@ -57,6 +57,21 @@ header {
     transform: scale(1.02);
 }
 
+.brand-title-container {
+    display: flex;
+    align-items: center;
+}
+
+.symbol-right {
+    height: 130px;
+    width: auto;
+    transition: transform 0.4s ease;
+}
+
+.symbol-right:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
 .logo-military {
     height: 50px;
     width: auto;
@@ -483,7 +498,7 @@ header {
 }
 
 .small-logo {
-    width: 150px;
+    width: 180px;
     height: auto;
 }
 
@@ -494,7 +509,7 @@ header {
 }
 
 .main-image {
-    width: 80%;
+    width: 85%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
