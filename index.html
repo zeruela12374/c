@@ -379,29 +379,7 @@
                 </p>
             </div>
             <div class="modal-actions">
-                
                 <button class="btn btn-primary" id="confirmSystemAccess">Continuar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de login necessário -->
-    <div class="modal-overlay" id="loginRequiredModal">
-        <div class="modal">
-            <div class="modal-header">
-                <img src="/src/imgs/capacitatg.png" 
-                     alt="Logo Capacita TG">
-                <h3>Login Necessário</h3>
-                <p>Você precisa estar logado para acessar</p>
-            </div>
-            <div class="modal-content">
-                <p style="text-align: center; color: #6c757d;">
-                    Para acessar esta funcionalidade, você precisa fazer login primeiro.
-                </p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelLogin">Cancelar</button>
-                <button class="btn btn-primary" id="goToLogin">Fazer Login</button>
             </div>
         </div>
     </div>
@@ -504,16 +482,6 @@
                 hideModal('systemAccessModal');
                 showSuccessModal('Redirecionamento', 'Em desenvolvimento: aqui você seria redirecionado para o dashboard principal.');
             });
-
-            document.getElementById('cancelLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-            });
-
-            document.getElementById('goToLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-                // Redirecionar para página de login
-                window.location.href = 'entrar.html';
-            });
         }
 
         function checkLoggedInUser() {
@@ -556,11 +524,11 @@
             showSuccessModal('Logout Realizado', 'Você foi desconectado com sucesso!');
         }
 
-        // Clique no botão do header
+        // Clique no botão do header - SIMPLIFICADO
         document.getElementById('headerLoginBtn').addEventListener('click', function() {
             const userData = localStorage.getItem('capacitaTgUser');
             if (userData) {
-                // Se estiver logado, mostrar modal com informações
+                // Se estiver logado, mostrar modal com informações do usuário
                 const user = JSON.parse(userData);
                 document.getElementById('modalUserName').textContent = user.nome;
                 document.getElementById('modalUserEmail').textContent = user.email;
@@ -568,8 +536,8 @@
                     user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
                 showModal('userProfileModal');
             } else {
-                // Se não estiver logado, mostrar modal de login necessário
-                showModal('loginRequiredModal');
+                // Se não estiver logado, redirecionar diretamente para entrar.html
+                window.location.href = 'entrar.html';
             }
         });
     </script>

@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacita TG - Login</title>
+    <title>Capacita TG - Cadastro</title>
     <link rel="icon" href="/src/imgs/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos específicos para a página de login */
-        .login-section {
+        /* Estilos específicos para a página de cadastro */
+        .register-section {
             padding: 4rem 0;
             background: #f8f9fa;
         }
 
-        .login-container {
-            max-width: 500px;
+        .register-container {
+            max-width: 600px;
             margin: 0 auto;
             background: white;
             padding: 3rem;
@@ -23,29 +23,29 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .login-header {
+        .register-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .login-header img {
+        .register-header img {
             height: 120px;
             margin-bottom: 1rem;
         }
 
-        .login-header h2 {
+        .register-header h2 {
             font-family: 'PT Serif', serif;
             color: #2c5530;
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
-        .login-header p {
+        .register-header p {
             color: #6c757d;
             font-size: 1.1rem;
         }
 
-        .login-form {
+        .register-form {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -64,7 +64,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             padding: 1rem;
             border: 2px solid #e9ecef;
             border-radius: 8px;
@@ -72,8 +73,15 @@
             transition: border-color 0.3s ease;
         }
 
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Roboto', sans-serif;
+        }
+
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #4a7c59;
             box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
@@ -116,93 +124,73 @@
             border-color: #4a7c59;
         }
 
-        .login-footer {
+        .dynamic-fields {
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .dynamic-fields.active {
+            display: flex;
+        }
+
+        .register-footer {
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid #e9ecef;
         }
 
-        .login-footer p {
+        .register-footer p {
             color: #6c757d;
             margin-bottom: 1rem;
         }
 
-        .login-footer a {
+        .register-footer a {
             color: #4a7c59;
             text-decoration: none;
             font-weight: 600;
         }
 
-        .login-footer a:hover {
+        .register-footer a:hover {
             text-decoration: underline;
         }
 
-        .user-info {
-            margin: 2rem 0;
-        }
-
-        .user-info .form-group {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .user-info .form-group label {
-            min-width: 120px;
+        .btn-primary {
+            background: #4a7c59;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #2c5530;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .user-info .form-group p {
-            margin: 0;
-            color: #333;
-            font-weight: 500;
+        .btn-primary:hover {
+            background: #3d5f47;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
         }
 
-        .login-form .btn-secondary {
+        .btn-secondary {
             background: #6c757d;
             color: white;
-            margin-top: 1rem;
-        }
-
-        .login-form .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        /* Estilos para o botão do header quando logado */
-        .btn-login.logged-in {
-            background: rgba(255,255,255,0.95) !important;
-            color: #2c5530 !important;
-            padding: 0.5rem 1rem !important;
-            min-width: 200px;
-            text-align: left;
-            position: relative;
-        }
-
-        .btn-login.logged-in:hover {
-            background: rgba(255,255,255,1) !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .user-info-header {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-
-        .user-name-header {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .user-type-header {
-            font-size: 0.7rem;
-            color: #6c757d;
-            font-weight: 400;
+        .btn-secondary:hover {
+            background: #5a6268;
         }
 
         /* Estilos dos Modais */
@@ -295,15 +283,6 @@
             max-width: 150px;
         }
 
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
         .btn-success {
             background: #28a745;
             color: white;
@@ -313,14 +292,24 @@
             background: #218838;
         }
 
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         @media (max-width: 768px) {
-            .login-container {
+            .register-container {
                 margin: 1rem;
                 padding: 2rem;
             }
 
             .user-type-container {
                 flex-direction: column;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -356,7 +345,7 @@
                         <div class="search-container">
                             <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
                         </div>
-                        <button class="btn btn-login" id="headerLoginBtn">Login</button>
+                        
                     </div>
                 </div>
             </div>
@@ -364,28 +353,17 @@
     </header>
 
     <main>
-        <section class="login-section">
+        <section class="register-section">
             <div class="container">
-                <!-- Formulário de Login -->
-                <div class="login-container" id="loginContainer">
-                    <div class="login-header">
+                <div class="register-container">
+                    <div class="register-header">
                         <img src="/src/imgs/capacitatg.png" 
                              alt="Logo Capacita TG">
-                        <h2>Acesse sua Conta</h2>
-                        <p>Entre para continuar sua jornada profissional</p>
+                        <h2>Cadastro de Informações</h2>
+                        <p>Preencha seus dados para participar da plataforma Capacita TG</p>
                     </div>
 
-                    <form class="login-form" id="loginForm">
-                        <div class="form-group">
-                            <label for="nome">Nome Completo</label>
-                            <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
-                        </div>
-
+                    <form class="register-form" id="registerForm">
                         <div class="form-group">
                             <label>Tipo de Usuário</label>
                             <div class="user-type-container">
@@ -398,100 +376,84 @@
                                 <div class="user-type-option">
                                     <input type="radio" id="empregador" name="tipoUsuario" value="empregador" required>
                                     <label for="empregador" class="user-type-label">
-                                        Empregador
+                                        Empresa
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Entrar</button>
+                        <!-- Campos para Atirador -->
+                        <div id="atiradorFields" class="dynamic-fields">
+                            <div class="two-columns">
+                                <div class="form-group">
+                                    <label for="nomeAtirador">Nome Completo *</label>
+                                    <input type="text" id="nomeAtirador" name="nome" placeholder="Digite seu nome completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cidadeAtirador">Cidade *</label>
+                                    <input type="text" id="cidadeAtirador" name="cidade" placeholder="Digite sua cidade">
+                                </div>
+                            </div>
+                            
+                            <div class="two-columns">
+                                <div class="form-group">
+                                    <label for="emailAtirador">E-mail *</label>
+                                    <input type="email" id="emailAtirador" name="email" placeholder="Digite seu e-mail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefoneAtirador">Telefone *</label>
+                                    <input type="tel" id="telefoneAtirador" name="telefone" placeholder="(82) 99999-9999">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="habilidadesAtirador">Habilidades *</label>
+                                <textarea id="habilidadesAtirador" name="habilidades" placeholder="Descreva suas principais habilidades e competências (ex: Liderança, Disciplina, Trabalho em equipe, etc.)"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="experienciaAtirador">Experiência Profissional</label>
+                                <textarea id="experienciaAtirador" name="experiencia" placeholder="Descreva sua experiência profissional relevante (empregos anteriores, projetos, etc.)"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="formacaoAtirador">Formação (Cursos e Certificações)</label>
+                                <textarea id="formacaoAtirador" name="formacao" placeholder="Liste sua formação acadêmica, cursos técnicos, certificações e treinamentos relevantes"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Campos para Empresa -->
+                        <div id="empresaFields" class="dynamic-fields">
+                            <div class="two-columns">
+                                <div class="form-group">
+                                    <label for="nomeEmpresa">Nome da Empresa *</label>
+                                    <input type="text" id="nomeEmpresa" name="nomeEmpresa" placeholder="Digite o nome da empresa">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cidadeEmpresa">Cidade *</label>
+                                    <input type="text" id="cidadeEmpresa" name="cidade" placeholder="Digite a cidade da empresa">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailEmpresa">E-mail de Contato *</label>
+                                <input type="email" id="emailEmpresa" name="email" placeholder="Digite o e-mail de contato da empresa">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="informacoesEmpresa">Informações Adicionais</label>
+                                <textarea id="informacoesEmpresa" name="informacoes" placeholder="Descreva sua empresa, área de atuação, tipos de vagas oferecidas e outras informações relevantes"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Cadastrar Informações</button>
                     </form>
 
-                    <div class="login-footer">
-                        <p>Não tem uma conta?</p>
-                        <a href="#cadastro">Cadastre-se aqui</a>
-                        <br><br>
-                        <a href="#esqueci-senha">Esqueceu sua senha?</a>
-                    </div>
-                </div>
-
-                <!-- Tela de usuário logado -->
-                <div class="login-container" id="loggedInContainer" style="display: none;">
-                    <div class="login-header">
-                        <img src="/src/imgs/capacitatg.png" 
-                             alt="Logo Capacita TG">
-                        <h2>Bem-vindo de volta!</h2>
-                        <p id="welcomeMessage">Você já está logado no sistema</p>
-                    </div>
-
-                    <div class="user-info">
-                        <div class="form-group">
-                            <label>Nome:</label>
-                            <p id="userNameDisplay"></p>
-                        </div>
-                        <div class="form-group">
-                            <label>E-mail:</label>
-                            <p id="userEmailDisplay"></p>
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo de Usuário:</label>
-                            <p id="userTypeDisplay"></p>
-                        </div>
-                    </div>
-
-                    <div class="login-form">
-                        <button type="button" class="btn btn-primary" id="acessarSistema">Acessar Sistema</button>
-                        <button type="button" class="btn btn-secondary" id="logout">Sair da Conta</button>
-                    </div>
+                   
                 </div>
             </div>
         </section>
     </main>
-
-    <!-- Modais -->
-    <!-- Modal de perfil do usuário -->
-    <div class="modal-overlay" id="userProfileModal">
-        <div class="modal">
-            <div class="modal-header">
-                <img src="/src/imgs/capacitatg.png" 
-                     alt="Logo Capacita TG">
-                <h3>Perfil do Usuário</h3>
-                <p>Suas informações de acesso</p>
-            </div>
-            <div class="modal-content">
-                <div class="modal-info">
-                    <p><strong>Nome:</strong> <span id="modalUserName"></span></p>
-                    <p><strong>Email:</strong> <span id="modalUserEmail"></span></p>
-                    <p><strong>Tipo:</strong> <span id="modalUserType"></span></p>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-success" id="modalAcessarSistema">Acessar Sistema</button>
-                <button class="btn btn-danger" id="modalLogout">Fazer Logout</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de confirmação de logout -->
-    <div class="modal-overlay" id="logoutConfirmModal">
-        <div class="modal">
-            <div class="modal-header">
-                <img src="/src/imgs/capacitatg.png" 
-                     alt="Logo Capacita TG">
-                <h3>Confirmar Logout</h3>
-                <p>Tem certeza que deseja sair?</p>
-            </div>
-            <div class="modal-content">
-                <p style="text-align: center; color: #6c757d;">
-                    Você será desconectado do sistema e precisará fazer login novamente.
-                </p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelLogout">Cancelar</button>
-                <button class="btn btn-danger" id="confirmLogout">Sair</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal de sucesso -->
     <div class="modal-overlay" id="successModal">
@@ -499,31 +461,16 @@
             <div class="modal-header">
                 <img src="/src/imgs/capacitatg.png" 
                      alt="Logo Capacita TG">
-                <h3 id="successTitle">Sucesso!</h3>
-                <p id="successMessage">Operação realizada com sucesso!</p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-primary" id="closeSuccessModal">OK</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de acesso ao sistema -->
-    <div class="modal-overlay" id="systemAccessModal">
-        <div class="modal">
-            <div class="modal-header">
-                <img src="/src/imgs/capacitatg.png" 
-                     alt="Logo Capacita TG">
-                <h3>Acessar Sistema</h3>
-                <p>Redirecionando para a área principal</p>
+                <h3 id="successTitle">Informações Cadastradas!</h3>
+                <p id="successMessage">Seus dados foram registrados com sucesso!</p>
             </div>
             <div class="modal-content">
-                <p style="text-align: center; color: #6c757d;">
-                    Você será direcionado para a página principal do sistema Capacita TG.
-                </p>
+                <div class="modal-info" id="userDataDisplay">
+                    <!-- Os dados do usuário serão inseridos aqui -->
+                </div>
             </div>
             <div class="modal-actions">
-                <button class="btn btn-primary" id="confirmSystemAccess">Continuar</button>
+                <button class="btn btn-success" id="closeSuccessModal">Continuar</button>
             </div>
         </div>
     </div>
@@ -563,7 +510,7 @@
     </footer>
 
     <script>
-        // Funções de controle dos modais
+        // Controle dos modais
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.classList.add('active');
@@ -576,20 +523,37 @@
             document.body.style.overflow = '';
         }
 
-        function showSuccessModal(title, message) {
-            document.getElementById('successTitle').textContent = title;
-            document.getElementById('successMessage').textContent = message;
-            showModal('successModal');
-        }
-
-        // Verificar se usuário já está logado ao carregar a página
+        // Configuração dos eventos ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
-            checkLoggedInUser();
+            setupFormEvents();
             setupModalEvents();
         });
 
+        function setupFormEvents() {
+            // Evento para mudança do tipo de usuário
+            const tipoUsuarioInputs = document.querySelectorAll('input[name="tipoUsuario"]');
+            tipoUsuarioInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    toggleUserTypeFields(this.value);
+                });
+            });
+
+            // Submissão do formulário
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleFormSubmission();
+            });
+
+            // Máscara para telefone
+            document.getElementById('telefoneAtirador').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                e.target.value = value;
+            });
+        }
+
         function setupModalEvents() {
-            // Fechar modais clicando no overlay
+            // Fechar modal clicando no overlay
             document.querySelectorAll('.modal-overlay').forEach(overlay => {
                 overlay.addEventListener('click', function(e) {
                     if (e.target === overlay) {
@@ -598,160 +562,176 @@
                 });
             });
 
-            // Eventos dos botões dos modais
-            document.getElementById('modalAcessarSistema').addEventListener('click', function() {
-                hideModal('userProfileModal');
-                showModal('systemAccessModal');
-            });
-
-            document.getElementById('modalLogout').addEventListener('click', function() {
-                hideModal('userProfileModal');
-                showModal('logoutConfirmModal');
-            });
-
-            document.getElementById('cancelLogout').addEventListener('click', function() {
-                hideModal('logoutConfirmModal');
-            });
-
-            document.getElementById('confirmLogout').addEventListener('click', function() {
-                hideModal('logoutConfirmModal');
-                performLogout();
-            });
-
+            // Botão de fechar modal de sucesso
             document.getElementById('closeSuccessModal').addEventListener('click', function() {
                 hideModal('successModal');
-            });
-
-            document.getElementById('confirmSystemAccess').addEventListener('click', function() {
-                hideModal('systemAccessModal');
-                // Aqui você redirecionaria para a página principal
-                showSuccessModal('Redirecionamento', 'Em desenvolvimento: aqui você seria redirecionado para o dashboard principal.');
-                // window.location.href = 'dashboard.html';
+                // Opcional: redirecionar para página de login
+                // window.location.href = 'entrar.html';
             });
         }
 
-        function checkLoggedInUser() {
-            const userData = localStorage.getItem('capacitaTgUser');
-            const headerLoginBtn = document.getElementById('headerLoginBtn');
-            
-            if (userData) {
-                const user = JSON.parse(userData);
-                showLoggedInScreen(user);
-                // Atualizar botão do header com as informações do usuário
-                updateHeaderButton(user, true);
-            } else {
-                showLoginForm();
-                updateHeaderButton(null, false);
+        function toggleUserTypeFields(userType) {
+            const atiradorFields = document.getElementById('atiradorFields');
+            const empresaFields = document.getElementById('empresaFields');
+
+            // Esconder todos os campos primeiro
+            atiradorFields.classList.remove('active');
+            empresaFields.classList.remove('active');
+
+            // Mostrar campos relevantes
+            if (userType === 'atirador') {
+                atiradorFields.classList.add('active');
+                setRequiredFields('atirador');
+            } else if (userType === 'empregador') {
+                empresaFields.classList.add('active');
+                setRequiredFields('empregador');
             }
         }
 
-        function updateHeaderButton(user, isLoggedIn) {
-            const headerLoginBtn = document.getElementById('headerLoginBtn');
-            
-            if (isLoggedIn && user) {
-                headerLoginBtn.innerHTML = `
-                    <div class="user-info-header">
-                        <span class="user-name-header">${user.nome.split(' ')[0]} ${user.nome.split(' ')[1] || ''}</span>
-                        <span class="user-type-header">${user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador'}</span>
-                    </div>
-                `;
-                headerLoginBtn.classList.add('logged-in');
-            } else {
-                headerLoginBtn.textContent = 'Login';
-                headerLoginBtn.classList.remove('logged-in');
-                headerLoginBtn.style.background = '';
-                headerLoginBtn.style.color = '';
+        function setRequiredFields(userType) {
+            // Remover required de todos os campos primeiro
+            document.querySelectorAll('.dynamic-fields input, .dynamic-fields textarea').forEach(field => {
+                field.removeAttribute('required');
+            });
+
+            // Adicionar required aos campos relevantes
+            if (userType === 'atirador') {
+                ['nomeAtirador', 'cidadeAtirador', 'emailAtirador', 'telefoneAtirador', 'habilidadesAtirador'].forEach(id => {
+                    document.getElementById(id).setAttribute('required', '');
+                });
+            } else if (userType === 'empregador') {
+                ['nomeEmpresa', 'cidadeEmpresa', 'emailEmpresa'].forEach(id => {
+                    document.getElementById(id).setAttribute('required', '');
+                });
             }
         }
 
-        function showLoginForm() {
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('loggedInContainer').style.display = 'none';
-        }
-
-        function showLoggedInScreen(user) {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('loggedInContainer').style.display = 'block';
-            
-            // Preencher informações do usuário
-            document.getElementById('userNameDisplay').textContent = user.nome;
-            document.getElementById('userEmailDisplay').textContent = user.email;
-            document.getElementById('userTypeDisplay').textContent = 
-                user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
-            document.getElementById('welcomeMessage').textContent = 
-                `Olá, ${user.nome.split(' ')[0]}! Você já está logado no sistema.`;
-        }
-
-        // Form submission handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
+        function handleFormSubmission() {
             const tipoUsuario = document.querySelector('input[name="tipoUsuario"]:checked').value;
-            
-            const userData = {
-                nome: nome,
-                email: email,
+            let userData = {
                 tipoUsuario: tipoUsuario,
-                loginDate: new Date().toISOString()
+                cadastroDate: new Date().toISOString()
             };
-            
-            // Salvar no localStorage
-            localStorage.setItem('capacitaTgUser', JSON.stringify(userData));
-            
-            // Mostrar tela de logado
-            showLoggedInScreen(userData);
-            
-            // Atualizar botão do header
-            updateHeaderButton(userData, true);
-            
-            // Limpar formulário
-            document.getElementById('loginForm').reset();
-            
-            // Mostrar modal de sucesso
-            showSuccessModal('Login Realizado!', `Bem-vindo(a), ${nome.split(' ')[0]}! Você foi conectado com sucesso.`);
-        });
 
-        // Botão acessar sistema
-        document.getElementById('acessarSistema').addEventListener('click', function() {
-            showModal('systemAccessModal');
-        });
-
-        // Botão logout
-        document.getElementById('logout').addEventListener('click', function() {
-            showModal('logoutConfirmModal');
-        });
-
-        function performLogout() {
-            // Remover dados do localStorage
-            localStorage.removeItem('capacitaTgUser');
-            
-            // Mostrar formulário de login novamente
-            showLoginForm();
-            
-            // Restaurar botão do header
-            updateHeaderButton(null, false);
-            
-            showSuccessModal('Logout Realizado', 'Você foi desconectado com sucesso!');
+            if (tipoUsuario === 'atirador') {
+                userData = {
+                    ...userData,
+                    nome: document.getElementById('nomeAtirador').value,
+                    cidade: document.getElementById('cidadeAtirador').value,
+                    email: document.getElementById('emailAtirador').value,
+                    telefone: document.getElementById('telefoneAtirador').value,
+                    habilidades: document.getElementById('habilidadesAtirador').value,
+                    experiencia: document.getElementById('experienciaAtirador').value,
+                    formacao: document.getElementById('formacaoAtirador').value
+                };
+                
+                // Enviar dados para Google Forms (Atirador)
+                submitAtiradorToGoogleForms(userData);
+                
+            } else {
+                userData = {
+                    ...userData,
+                    nomeEmpresa: document.getElementById('nomeEmpresa').value,
+                    cidade: document.getElementById('cidadeEmpresa').value,
+                    email: document.getElementById('emailEmpresa').value,
+                    informacoes: document.getElementById('informacoesEmpresa').value
+                };
+                
+                // Enviar dados para Google Forms (Empresa)
+                submitEmpresaToGoogleForms(userData);
+            }
         }
 
-        // Clique no botão do header
-        document.getElementById('headerLoginBtn').addEventListener('click', function() {
-            const userData = localStorage.getItem('capacitaTgUser');
-            if (userData) {
-                // Se estiver logado, mostrar modal com informações
-                const user = JSON.parse(userData);
-                document.getElementById('modalUserName').textContent = user.nome;
-                document.getElementById('modalUserEmail').textContent = user.email;
-                document.getElementById('modalUserType').textContent = 
-                    user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
-                showModal('userProfileModal');
+        function submitAtiradorToGoogleForms(userData) {
+            // ID do formulário Google Forms para Atiradores
+            const GOOGLE_FORM_ID = '1FAIpQLSd8zGOHszNQbbUNoXYYaOBuqHsEstf5iCQs8FaBC3RkpCYIJg';
+            const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+            
+            // Entry IDs do Google Forms para Atiradores
+            const formData = new FormData();
+            formData.append('entry.514042188', userData.nome);          // Nome
+            formData.append('entry.693758517', userData.cidade);        // Cidade
+            formData.append('entry.2133501356', userData.email);        // Email
+            formData.append('entry.1671026996', userData.telefone);     // Telefone
+            formData.append('entry.1661106719', userData.habilidades);  // Habilidades
+            formData.append('entry.1117175532', userData.experiencia);  // Experiência
+            formData.append('entry.702634501', userData.formacao);      // Formação
+            
+            sendToGoogleForms(GOOGLE_FORM_URL, formData, userData);
+        }
+
+        function submitEmpresaToGoogleForms(userData) {
+            // ID do formulário Google Forms para Empresas
+            const GOOGLE_FORM_ID = '1FAIpQLSfLvlE4GknS15UEl6BHCbFc6sCye0E6VpOyMZ5oNVXrakv49Q';
+            const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+            
+            // Entry IDs do Google Forms para Empresas
+            const formData = new FormData();
+            formData.append('entry.1411481709', userData.nomeEmpresa);  // Nome da Empresa
+            formData.append('entry.1601507226', userData.cidade);       // Cidade
+            formData.append('entry.390590409', userData.email);         // Email de Contato
+            formData.append('entry.391909014', userData.informacoes);   // Informações Adicionais
+            
+            sendToGoogleForms(GOOGLE_FORM_URL, formData, userData);
+        }
+
+        function sendToGoogleForms(url, formData, userData) {
+            // Enviar dados para Google Forms
+            fetch(url, {
+                method: 'POST',
+                mode: 'no-cors', // Necessário para Google Forms
+                body: formData
+            })
+            .then(() => {
+                // Sucesso - Google Forms sempre retorna erro CORS, mas os dados são salvos
+                showSuccessModal(userData);
+                clearForm();
+            })
+            .catch((error) => {
+                // Mesmo com erro CORS, os dados geralmente são salvos no Google Forms
+                console.log('Dados enviados para Google Forms (erro CORS esperado)');
+                showSuccessModal(userData);
+                clearForm();
+            });
+        }
+
+        function clearForm() {
+            // Limpar formulário
+            document.getElementById('registerForm').reset();
+            // Esconder campos dinâmicos
+            document.getElementById('atiradorFields').classList.remove('active');
+            document.getElementById('empresaFields').classList.remove('active');
+        }
+
+        function showSuccessModal(userData) {
+            const userDataDisplay = document.getElementById('userDataDisplay');
+            let dataHTML = '';
+            let successMessage = '';
+
+            if (userData.tipoUsuario === 'atirador') {
+                dataHTML = `
+                    <p><strong>Nome:</strong> ${userData.nome}</p>
+                    <p><strong>Cidade:</strong> ${userData.cidade}</p>
+                    <p><strong>Email:</strong> ${userData.email}</p>
+                    <p><strong>Telefone:</strong> ${userData.telefone}</p>
+                    <p><strong>Tipo:</strong> Atirador</p>
+                `;
+                successMessage = 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Você foi cadastrado em nossa base de atiradores.';
             } else {
-                // Se não estiver logado, focar no formulário
-                document.getElementById('nome').focus();
+                dataHTML = `
+                    <p><strong>Empresa:</strong> ${userData.nomeEmpresa}</p>
+                    <p><strong>Cidade:</strong> ${userData.cidade}</p>
+                    <p><strong>Email:</strong> ${userData.email}</p>
+                    <p><strong>Tipo:</strong> Empresa</p>
+                `;
+                successMessage = 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Sua empresa foi cadastrada em nossa base de parceiros.';
             }
-        });
+
+            userDataDisplay.innerHTML = dataHTML;
+            document.getElementById('successMessage').textContent = successMessage;
+            
+            showModal('successModal');
+        }
     </script>
 </body>
 </html>
