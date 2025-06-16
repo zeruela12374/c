@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Capacita TG - Qualificação profissional para Atiradores dos Tiros de Guerra com cursos gratuitos">
+    <meta name="keywords" content="cursos gratuitos, capacitação, exército, tiro de guerra, profissionalização">
     <title>Capacita TG</title>
     <link rel="icon" href="/src/imgs/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" as="style">
+    <link rel="preload" href="/src/imgs/cmnelogo.png" as="image">
+    <link rel="preload" href="/src/imgs/7rm.PNG" as="image">
     <style>
         /* Estilos para o botão do header quando logado */
         .btn-login.logged-in {
@@ -150,6 +155,7 @@
     </style>
 </head>
 <body>
+    <button id="darkModeToggle" class="dark-mode-btn">🌓</button>
     <header>
         <div class="container">
             <div class="header-content">
@@ -164,9 +170,9 @@
                         </div>
                     </div>
 
-                    <nav class="main-nav">
+                    <nav class="main-nav" aria-label="Navegação principal">
                         <ul>
-                            <li><a href="entrar.html" class="nav-link">Cadastre-se</a></li>
+                            <li><a href="entrar.html" class="nav-link" aria-current="page">Cadastre-se</a></li>
                             <li><a href="index.html#parceiros" class="nav-link">Sobre Nós</a></li>
                             <li><a href="index.html" class="nav-link">Notícias</a></li>
                             <li><a href="index.html#parceira" class="nav-link">Parceiros</a></li>
@@ -396,13 +402,16 @@
         </div>
     </div>
 
-    <footer id="contato">
+    <footer id="contato" itemscope itemtype="https://schema.org/Organization">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
-                    <h3>Capacita TG</h3>
-                    <p>Sua jornada de sucesso começa aqui.</p>
-                    <p>R. Srg. Benevides Montes, s/n - Primavera, Arapiraca - AL</p>
+                    <h3 itemprop="name">Capacita TG</h3>
+                    <p itemprop="description">Sua jornada de sucesso começa aqui.</p>
+                    <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <p><span itemprop="streetAddress">R. Srg. Benevides Montes, s/n - Primavera</span>, 
+                        <span itemprop="addressLocality">Arapiraca</span> - <span itemprop="addressRegion">AL</span></p>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>Links Rápidos</h4>
@@ -429,6 +438,38 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll para links internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Intersection Observer para animações
+    const animateOnScroll = (elements, className) => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add(className);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        elements.forEach(el => observer.observe(el));
+    };
+
+    // Animar cards ao aparecer na tela
+    animateOnScroll(document.querySelectorAll('.course-card'), 'animate-card');
+});
         // Funções de controle dos modais
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -549,6 +590,46 @@
                 // Se não estiver logado, redirecionar diretamente para entrar.html
                 window.location.href = 'entrar.html';
             }
+        });
+    </script>
+    <script>
+        // Lazy loading para imagens
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+    
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            }
+        });
+    
+        // WebP detection for better image format
+        function checkWebP() {
+            return new Promise(res => {
+                const webP = new Image();
+                webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+                webP.onload = webP.onerror = () => res(webP.height === 2);
+            });
+        }
+    
+        checkWebP().then(hasWebP => {
+            if (hasWebP) document.documentElement.classList.add('webp');
+            else document.documentElement.classList.add('no-webp');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
         });
     </script>
 </body>
