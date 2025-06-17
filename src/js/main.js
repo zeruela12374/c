@@ -1,6 +1,6 @@
 import { initNavigation } from './navigation.js';
 
-// Initialize navigation when DOM is ready
+// Inicializar a navegação quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
 });
