@@ -559,6 +559,15 @@ header.header-visible {
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
+.image-container.no-padding-top {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.image-container.no-padding-top img {
+    object-position: top;
+}
+
 .course-card .image-container {
     height: 220px;
     overflow: hidden;
