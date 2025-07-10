@@ -389,7 +389,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cidadeAtirador">Cidade *</label>
-                                    <input type="text" id="cidadeAtirador" name="cidade" placeholder="Digite sua cidade">
+                                    <select id="cidadeAtirador" name="cidade" required>
+                                        <option value="">Selecione sua cidade</option>
+                                    </select>
                                 </div>
                             </div>
                             
@@ -428,7 +430,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cidadeEmpresa">Cidade *</label>
-                                    <input type="text" id="cidadeEmpresa" name="cidade" placeholder="Digite a cidade da empresa">
+                                    <select id="cidadeEmpresa" name="cidade" required>
+                                        <option value="">Selecione a cidade da empresa</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -438,8 +442,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="informacoesEmpresa">Informações Adicionais</label>
-                                <textarea id="informacoesEmpresa" name="informacoes" placeholder="Descreva sua empresa, área de atuação, tipos de vagas oferecidas e outras informações relevantes"></textarea>
+                                <label for="informacoesEmpresa">Necessidades Específicas</label>
+                                <textarea id="informacoesEmpresa" name="informacoes" placeholder="Descreva as necessidades específicas da empresa, tipos de profissionais procurados, requisitos especiais e outras informações relevantes"></textarea>
                             </div>
                         </div>
 
@@ -503,228 +507,554 @@
     </footer>
 
     <script>
-        // Controle dos modais
-        function showModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Configuração dos eventos ao carregar a página
-        document.addEventListener('DOMContentLoaded', function() {
-            setupFormEvents();
-            setupModalEvents();
+        // ========== CONFIGURAÇÃO AVANÇADA DE DADOS ==========
+        
+        // Mapeamento imutável das cidades com seus respectivos TGs
+        const CIDADES_TG = Object.freeze({
+            'arapiraca': { nome: 'Arapiraca', tg: '07-015' },
+            'penedo': { nome: 'Penedo', tg: '07-008' },
+            'sao-jose-da-laje': { nome: 'São José da Laje', tg: '07-009' },
+            'palmeira-dos-indios': { nome: 'Palmeira dos Índios', tg: '07-007' },
+            'teotonio-vilela': { nome: 'Teotônio Vilela', tg: '07-022' }
         });
 
-        function setupFormEvents() {
-            // Evento para mudança do tipo de usuário
-            const tipoUsuarioInputs = document.querySelectorAll('input[name="tipoUsuario"]');
-            tipoUsuarioInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    toggleUserTypeFields(this.value);
+        // Mapeamento de links específicos por cidade usando Map para performance
+        const LINKS_POR_CIDADE = new Map([
+            ['arapiraca', {
+                googleFormsAtirador: '1FAIpQLSfLrW0ZHVQ4c2ZL2NasplqpBVXoi6OBjEerAKW892CqDCOwyg',
+                googleFormsEmpresa: '1FAIpQLSdYlATmRxlXPP4J2l95JkV-rUtq7Pz0U0IQy81RC0dOyazm4w',
+                instagram: 'https://www.instagram.com/tg07015_exercito/',
+                website: 'https://capacitatg.com'
+            }],
+            ['penedo', {
+                googleFormsAtirador: '1FAIpQLSd5u4S-0P8iDkthJ_MvIIpmPxuJMn1vfIptZ0sRB3XuZK4pFQ',
+                googleFormsEmpresa: '1FAIpQLSdaWIHXqDvGTrcdZO7maozDXZMY5uyuQ4kUBvDjJVAyWYq3fQ',
+                instagram: 'https://www.instagram.com/tg07008_penedo/',
+                website: 'https://capacitatg-penedo.com'
+            }],
+            ['sao-jose-da-laje', {
+                googleFormsAtirador: '1FAIpQLSfwmH8p16pMhpRDG293k30ZEcZRX8lrhQebLmaCgUD7KlndcA',
+                googleFormsEmpresa: '1FAIpQLSdsLt2uncwU8kMVXOHPZiQXPior0jsuhVWqzuPtF-E9rRlfGA',
+                instagram: 'https://www.instagram.com/tg07009_saojoselaje/',
+                website: 'https://capacitatg-saojoselaje.com'
+            }],
+            ['palmeira-dos-indios', {
+                googleFormsAtirador: '1FAIpQLSehnl4mE8IwGdAcyjO7B7OJnsEL8_D7wx8c02svJKPOOr8yhA',
+                googleFormsEmpresa: '1FAIpQLScD9-1RBbzzvZ-WHnMA03Eh5LB6SXfQiDO1Bi6JKBWHP4ZloA',
+                instagram: 'https://www.instagram.com/tg07007_palmeiradosindios/',
+                website: 'https://capacitatg-palmeiradosindios.com'
+            }],
+            ['teotonio-vilela', {
+                googleFormsAtirador: '1FAIpQLScGcDsOsjuQDZP2hgF1NbRNFEfCBkgcSn-jsmO-cVYLms3ijw',
+                googleFormsEmpresa: '1FAIpQLSdvs0CCRAF0bBEmG9BTu9ZQL_QPNH35dkSZ_CZOrf9nOpEIYw',
+                instagram: 'https://www.instagram.com/tg07022_teotoniovilela/',
+                website: 'https://capacitatg-teotoniovilela.com'
+            }]
+        ]);
+
+        // Entry IDs para Google Forms por cidade
+        const GOOGLE_FORMS_ENTRIES = Object.freeze({
+            'arapiraca': {
+                atirador: {
+                    nome: 'entry.853041105',
+                    cidade: 'entry.1655651544',
+                    email: 'entry.1163678157',
+                    telefone: 'entry.1064615820',
+                    habilidades: 'entry.886074616',
+                    experiencia: 'entry.751681135',
+                    formacao: 'entry.839720216'
+                },
+                empresa: {
+                    nomeEmpresa: 'entry.651591594',
+                    cidade: 'entry.1127503044',
+                    email: 'entry.126672336',
+                    informacoes: 'entry.1699463522'
+                }
+            },
+            'penedo': {
+                atirador: {
+                    nome: 'entry.1206068341',
+                    cidade: 'entry.1332917444',
+                    email: 'entry.1698248790',
+                    telefone: 'entry.811954895',
+                    habilidades: 'entry.1753535137',
+                    experiencia: 'entry.760431858',
+                    formacao: 'entry.719043884'
+                },
+                empresa: {
+                    nomeEmpresa: 'entry.1580825317',
+                    cidade: 'entry.173911948',
+                    email: 'entry.1485240650',
+                    informacoes: 'entry.2099592061'
+                }
+            },
+            'sao-jose-da-laje': {
+                atirador: {
+                    nome: 'entry.1899852279',
+                    cidade: 'entry.335067575',
+                    email: 'entry.399460357',
+                    telefone: 'entry.635521259',
+                    habilidades: 'entry.1937156146',
+                    experiencia: 'entry.569494459',
+                    formacao: 'entry.63562277'
+                },
+                empresa: {
+                    nomeEmpresa: 'entry.1775912737',
+                    cidade: 'entry.412601301',
+                    email: 'entry.715712106',
+                    informacoes: 'entry.325563878'
+                }
+            },
+            'palmeira-dos-indios': {
+                atirador: {
+                    nome: 'entry.1636878027',
+                    cidade: 'entry.1088563717',
+                    email: 'entry.725672814',
+                    telefone: 'entry.1102498617',
+                    habilidades: 'entry.1234823634',
+                    experiencia: 'entry.1598595418',
+                    formacao: 'entry.649280654'
+                },
+                empresa: {
+                    nomeEmpresa: 'entry.1911710254',
+                    cidade: 'entry.2005794250',
+                    email: 'entry.1576464807',
+                    informacoes: 'entry.600567061'
+                }
+            },
+            'teotonio-vilela': {
+                atirador: {
+                    nome: 'entry.253685633',
+                    cidade: 'entry.82920502',
+                    email: 'entry.2136174470',
+                    telefone: 'entry.1059105440',
+                    habilidades: 'entry.30521210',
+                    experiencia: 'entry.2097377194',
+                    formacao: 'entry.662991665'
+                },
+                empresa: {
+                    nomeEmpresa: 'entry.1716837033',
+                    cidade: 'entry.1324672214',
+                    email: 'entry.1981471285',
+                    informacoes: 'entry.333904842'
+                }
+            }
+        });
+
+        // ========== CLASSE PRINCIPAL PARA GERENCIAMENTO ==========
+        
+        class CapacitaTGManager {
+            constructor() {
+                this.currentCity = null;
+                this.currentUserType = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.populateCitySelects();
+                this.setupFormValidation();
+            }
+
+            // Popula os selects de cidade usando técnicas avançadas
+            populateCitySelects() {
+                const selects = ['cidadeAtirador', 'cidadeEmpresa'];
+                
+                selects.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    if (!select) return;
+
+                    // Limpa opções existentes mantendo a primeira
+                    select.innerHTML = '<option value="">Selecione a cidade</option>';
+
+                    // Cria fragment para performance
+                    const fragment = document.createDocumentFragment();
+                    
+                    // Usa Object.entries para iteração eficiente - remove o número do TG da exibição
+                    Object.entries(CIDADES_TG).forEach(([key, { nome, tg }]) => {
+                        const option = document.createElement('option');
+                        option.value = key;
+                        option.textContent = nome; // Só mostra o nome, sem o TG
+                        option.dataset.tg = tg;
+                        fragment.appendChild(option);
+                    });
+
+                    select.appendChild(fragment);
                 });
-            });
+            }
 
-            // Submissão do formulário
-            document.getElementById('registerForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                handleFormSubmission();
-            });
+            // Configuração avançada de event listeners
+            setupEventListeners() {
+                // Event delegation para performance
+                document.addEventListener('change', this.handleFormChanges.bind(this));
+                document.addEventListener('submit', this.handleFormSubmit.bind(this));
+                document.addEventListener('input', this.handleInputEvents.bind(this));
+                document.addEventListener('click', this.handleClickEvents.bind(this));
+            }
 
-            // Máscara para telefone
-            document.getElementById('telefoneAtirador').addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-                e.target.value = value;
-            });
-        }
+            // Handler centralizado para mudanças no formulário
+            handleFormChanges(event) {
+                const { target } = event;
+                
+                // Switch com performance otimizada
+                switch (target.name) {
+                    case 'tipoUsuario':
+                        this.handleUserTypeChange(target.value);
+                        break;
+                    case 'cidade':
+                        this.handleCityChange(target.value);
+                        break;
+                }
+            }
 
-        function setupModalEvents() {
-            // Fechar modal clicando no overlay
-            document.querySelectorAll('.modal-overlay').forEach(overlay => {
-                overlay.addEventListener('click', function(e) {
-                    if (e.target === overlay) {
-                        hideModal(overlay.id);
+            // Handler para mudança de tipo de usuário
+            handleUserTypeChange(userType) {
+                this.currentUserType = userType;
+                this.toggleUserTypeFields(userType);
+                this.setRequiredFields(userType);
+            }
+
+            // Handler para mudança de cidade
+            handleCityChange(cityKey) {
+                this.currentCity = cityKey;
+                
+                if (cityKey && CIDADES_TG[cityKey]) {
+                    // Atualiza informações baseadas na cidade selecionada
+                    this.updateCitySpecificInfo(cityKey);
+                }
+            }
+
+            // Atualiza informações específicas da cidade
+            updateCitySpecificInfo(cityKey) {
+                const links = LINKS_POR_CIDADE.get(cityKey);
+                if (links) {
+                    // Atualiza link do Instagram no footer dinamicamente
+                    const instagramLink = document.querySelector('.social-links a[href*="instagram"]');
+                    if (instagramLink) {
+                        instagramLink.href = links.instagram;
+                    }
+                }
+            }
+
+            // Handler para eventos de input
+            handleInputEvents(event) {
+                const { target } = event;
+                
+                if (target.id === 'telefoneAtirador') {
+                    this.applyPhoneMask(target);
+                }
+            }
+
+            // Handler para eventos de click
+            handleClickEvents(event) {
+                const { target } = event;
+                
+                if (target.classList.contains('modal-overlay')) {
+                    this.hideModal(target.id);
+                } else if (target.id === 'closeSuccessModal') {
+                    this.hideModal('successModal');
+                }
+            }
+
+            // Máscara de telefone com técnica avançada
+            applyPhoneMask(input) {
+                const value = input.value.replace(/\D/g, '');
+                const formattedValue = value.length <= 11 
+                    ? value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
+                    : value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                
+                input.value = formattedValue;
+            }
+
+            // Toggle de campos com animação suave
+            toggleUserTypeFields(userType) {
+                const fieldsMap = {
+                    'atirador': 'atiradorFields',
+                    'empregador': 'empresaFields'
+                };
+
+                // Esconde todos os campos primeiro
+                Object.values(fieldsMap).forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) field.classList.remove('active');
+                });
+
+                // Mostra o campo relevante
+                const targetField = document.getElementById(fieldsMap[userType]);
+                if (targetField) {
+                    // Pequeno delay para animação suave
+                    setTimeout(() => targetField.classList.add('active'), 50);
+                }
+            }
+
+            // Configuração dinâmica de campos obrigatórios
+            setRequiredFields(userType) {
+                // Remove required de todos os campos dinâmicos
+                document.querySelectorAll('.dynamic-fields input, .dynamic-fields textarea, .dynamic-fields select')
+                    .forEach(field => field.removeAttribute('required'));
+
+                // Mapas de campos obrigatórios
+                const requiredFields = {
+                    'atirador': ['nomeAtirador', 'cidadeAtirador', 'emailAtirador', 'telefoneAtirador', 'habilidadesAtirador'],
+                    'empregador': ['nomeEmpresa', 'cidadeEmpresa', 'emailEmpresa']
+                };
+
+                // Adiciona required aos campos relevantes
+                requiredFields[userType]?.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) field.setAttribute('required', '');
+                });
+            }
+
+            // Validação avançada do formulário
+            setupFormValidation() {
+                const form = document.getElementById('registerForm');
+                if (!form) return;
+
+                // Validação personalizada
+                form.addEventListener('invalid', (event) => {
+                    event.preventDefault();
+                    this.showValidationError(event.target);
+                }, true);
+            }
+
+            // Mostra erro de validação
+            showValidationError(field) {
+                field.focus();
+                field.classList.add('error');
+                setTimeout(() => field.classList.remove('error'), 3000);
+            }
+
+            // Handler principal para submissão do formulário
+            handleFormSubmit(event) {
+                if (event.target.id === 'registerForm') {
+                    event.preventDefault();
+                    this.processFormSubmission();
+                }
+            }
+
+            // Processamento da submissão do formulário
+            processFormSubmission() {
+                if (!this.validateForm()) return;
+
+                const userData = this.collectUserData();
+                this.submitToGoogleForms(userData);
+            }
+
+            // Validação completa do formulário
+            validateForm() {
+                const form = document.getElementById('registerForm');
+                const isValid = form.checkValidity();
+                
+                if (!isValid) {
+                    form.reportValidity();
+                    return false;
+                }
+
+                if (!this.currentCity) {
+                    alert('Por favor, selecione uma cidade válida.');
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Coleta dados do usuário com destructuring
+            collectUserData() {
+                const userType = this.currentUserType;
+                const cityData = CIDADES_TG[this.currentCity];
+                
+                const baseData = {
+                    tipoUsuario: userType,
+                    cidade: `${cityData.nome}`,
+                    cidadeKey: this.currentCity,
+                    tg: cityData.tg,
+                    cadastroDate: new Date().toISOString()
+                };
+
+                if (userType === 'atirador') {
+                    return {
+                        ...baseData,
+                        ...this.getAtiradorData()
+                    };
+                } else {
+                    return {
+                        ...baseData,
+                        ...this.getEmpresaData()
+                    };
+                }
+            }
+
+            // Coleta dados do atirador
+            getAtiradorData() {
+                const fields = ['nomeAtirador', 'emailAtirador', 'telefoneAtirador', 'habilidadesAtirador', 'experienciaAtirador', 'formacaoAtirador'];
+                const data = {};
+
+                fields.forEach(field => {
+                    const element = document.getElementById(field);
+                    if (element) {
+                        const key = field.replace('Atirador', '');
+                        data[key] = element.value.trim();
                     }
                 });
-            });
 
-            // Botão de fechar modal de sucesso
-            document.getElementById('closeSuccessModal').addEventListener('click', function() {
-                hideModal('successModal');
-                // Opcional: redirecionar para página de login
-                // window.location.href = 'entrar.html';
-            });
-        }
-
-        function toggleUserTypeFields(userType) {
-            const atiradorFields = document.getElementById('atiradorFields');
-            const empresaFields = document.getElementById('empresaFields');
-
-            // Esconder todos os campos primeiro
-            atiradorFields.classList.remove('active');
-            empresaFields.classList.remove('active');
-
-            // Mostrar campos relevantes
-            if (userType === 'atirador') {
-                atiradorFields.classList.add('active');
-                setRequiredFields('atirador');
-            } else if (userType === 'empregador') {
-                empresaFields.classList.add('active');
-                setRequiredFields('empregador');
+                return data;
             }
-        }
 
-        function setRequiredFields(userType) {
-            // Remover required de todos os campos primeiro
-            document.querySelectorAll('.dynamic-fields input, .dynamic-fields textarea').forEach(field => {
-                field.removeAttribute('required');
-            });
-
-            // Adicionar required aos campos relevantes
-            if (userType === 'atirador') {
-                ['nomeAtirador', 'cidadeAtirador', 'emailAtirador', 'telefoneAtirador', 'habilidadesAtirador'].forEach(id => {
-                    document.getElementById(id).setAttribute('required', '');
-                });
-            } else if (userType === 'empregador') {
-                ['nomeEmpresa', 'cidadeEmpresa', 'emailEmpresa'].forEach(id => {
-                    document.getElementById(id).setAttribute('required', '');
-                });
-            }
-        }
-
-        function handleFormSubmission() {
-            const tipoUsuario = document.querySelector('input[name="tipoUsuario"]:checked').value;
-            let userData = {
-                tipoUsuario: tipoUsuario,
-                cadastroDate: new Date().toISOString()
-            };
-
-            if (tipoUsuario === 'atirador') {
-                userData = {
-                    ...userData,
-                    nome: document.getElementById('nomeAtirador').value,
-                    cidade: document.getElementById('cidadeAtirador').value,
-                    email: document.getElementById('emailAtirador').value,
-                    telefone: document.getElementById('telefoneAtirador').value,
-                    habilidades: document.getElementById('habilidadesAtirador').value,
-                    experiencia: document.getElementById('experienciaAtirador').value,
-                    formacao: document.getElementById('formacaoAtirador').value
+            // Coleta dados da empresa
+            getEmpresaData() {
+                const fieldMap = {
+                    'nomeEmpresa': 'nomeEmpresa',
+                    'emailEmpresa': 'email',
+                    'informacoesEmpresa': 'informacoes'
                 };
-                
-                // Enviar dados para Google Forms (Atirador)
-                submitAtiradorToGoogleForms(userData);
-                
-            } else {
-                userData = {
-                    ...userData,
-                    nomeEmpresa: document.getElementById('nomeEmpresa').value,
-                    cidade: document.getElementById('cidadeEmpresa').value,
-                    email: document.getElementById('emailEmpresa').value,
-                    informacoes: document.getElementById('informacoesEmpresa').value
-                };
-                
-                // Enviar dados para Google Forms (Empresa)
-                submitEmpresaToGoogleForms(userData);
+
+                const data = {};
+                Object.entries(fieldMap).forEach(([elementId, dataKey]) => {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        data[dataKey] = element.value.trim();
+                    }
+                });
+
+                return data;
             }
-        }
 
-        function submitAtiradorToGoogleForms(userData) {
-            // ID do formulário Google Forms para Atiradores
-            const GOOGLE_FORM_ID = '1FAIpQLSd8zGOHszNQbbUNoXYYaOBuqHsEstf5iCQs8FaBC3RkpCYIJg';
-            const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
-            
-            // Entry IDs do Google Forms para Atiradores
-            const formData = new FormData();
-            formData.append('entry.514042188', userData.nome);          // Nome
-            formData.append('entry.693758517', userData.cidade);        // Cidade
-            formData.append('entry.2133501356', userData.email);        // Email
-            formData.append('entry.1671026996', userData.telefone);     // Telefone
-            formData.append('entry.1661106719', userData.habilidades);  // Habilidades
-            formData.append('entry.1117175532', userData.experiencia);  // Experiência
-            formData.append('entry.702634501', userData.formacao);      // Formação
-            
-            sendToGoogleForms(GOOGLE_FORM_URL, formData, userData);
-        }
+            // Submissão para Google Forms com links dinâmicos
+            submitToGoogleForms(userData) {
+                const cityLinks = LINKS_POR_CIDADE.get(userData.cidadeKey);
+                if (!cityLinks) {
+                    console.error('Links não encontrados para a cidade:', userData.cidadeKey);
+                    return;
+                }
 
-        function submitEmpresaToGoogleForms(userData) {
-            // ID do formulário Google Forms para Empresas
-            const GOOGLE_FORM_ID = '1FAIpQLSfLvlE4GknS15UEl6BHCbFc6sCye0E6VpOyMZ5oNVXrakv49Q';
-            const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
-            
-            // Entry IDs do Google Forms para Empresas
-            const formData = new FormData();
-            formData.append('entry.1411481709', userData.nomeEmpresa);  // Nome da Empresa
-            formData.append('entry.1601507226', userData.cidade);       // Cidade
-            formData.append('entry.390590409', userData.email);         // Email de Contato
-            formData.append('entry.391909014', userData.informacoes);   // Informações Adicionais
-            
-            sendToGoogleForms(GOOGLE_FORM_URL, formData, userData);
-        }
+                const formId = userData.tipoUsuario === 'atirador' 
+                    ? cityLinks.googleFormsAtirador 
+                    : cityLinks.googleFormsEmpresa;
 
-        function sendToGoogleForms(url, formData, userData) {
-            // Enviar dados para Google Forms
-            fetch(url, {
-                method: 'POST',
-                mode: 'no-cors', // Necessário para Google Forms
-                body: formData
-            })
-            .then(() => {
-                // Sucesso - Google Forms sempre retorna erro CORS, mas os dados são salvos
-                showSuccessModal(userData);
-                clearForm();
-            })
-            .catch((error) => {
-                // Mesmo com erro CORS, os dados geralmente são salvos no Google Forms
-                console.log('Dados enviados para Google Forms (erro CORS esperado)');
-                showSuccessModal(userData);
-                clearForm();
-            });
-        }
+                const formUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+                const formData = this.buildFormData(userData);
 
-        function clearForm() {
-            // Limpar formulário
-            document.getElementById('registerForm').reset();
-            // Esconder campos dinâmicos
-            document.getElementById('atiradorFields').classList.remove('active');
-            document.getElementById('empresaFields').classList.remove('active');
-        }
+                this.sendToGoogleForms(formUrl, formData, userData);
+            }
 
-        function showSuccessModal(userData) {
-            const userDataDisplay = document.getElementById('userDataDisplay');
-            let dataHTML = '';
-            let successMessage = '';
+            // Constrói FormData com base no tipo de usuário e cidade
+            buildFormData(userData) {
+                const formData = new FormData();
+                const entries = GOOGLE_FORMS_ENTRIES[userData.cidadeKey][userData.tipoUsuario];
 
-            if (userData.tipoUsuario === 'atirador') {
-                dataHTML = `
+                if (userData.tipoUsuario === 'atirador') {
+                    Object.entries(entries).forEach(([key, entryId]) => {
+                        const value = userData[key] || '';
+                        formData.append(entryId, value);
+                    });
+                } else {
+                    Object.entries(entries).forEach(([key, entryId]) => {
+                        const value = userData[key] || '';
+                        formData.append(entryId, value);
+                    });
+                }
+
+                return formData;
+            }
+
+            // Envia para Google Forms com tratamento de erro
+            async sendToGoogleForms(url, formData, userData) {
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                } catch (error) {
+                    console.log('Dados enviados para Google Forms (erro CORS esperado)');
+                } finally {
+                    this.showSuccessModal(userData);
+                    this.clearForm();
+                }
+            }
+
+            // Limpa formulário
+            clearForm() {
+                const form = document.getElementById('registerForm');
+                if (form) {
+                    form.reset();
+                    this.currentCity = null;
+                    this.currentUserType = null;
+                    
+                    // Esconde campos dinâmicos
+                    ['atiradorFields', 'empresaFields'].forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (field) field.classList.remove('active');
+                    });
+                }
+            }
+
+            // Mostra modal de sucesso
+            showSuccessModal(userData) {
+                const modalInfo = this.buildSuccessModalContent(userData);
+                const userDataDisplay = document.getElementById('userDataDisplay');
+                const successMessage = document.getElementById('successMessage');
+
+                if (userDataDisplay) userDataDisplay.innerHTML = modalInfo.dataHTML;
+                if (successMessage) successMessage.textContent = modalInfo.message;
+
+                this.showModal('successModal');
+            }
+
+            // Constrói conteúdo do modal de sucesso
+            buildSuccessModalContent(userData) {
+                const isAtirador = userData.tipoUsuario === 'atirador';
+                
+                const dataHTML = isAtirador ? `
                     <p><strong>Nome:</strong> ${userData.nome}</p>
                     <p><strong>Cidade:</strong> ${userData.cidade}</p>
                     <p><strong>Email:</strong> ${userData.email}</p>
                     <p><strong>Telefone:</strong> ${userData.telefone}</p>
                     <p><strong>Tipo:</strong> Atirador</p>
-                `;
-                successMessage = 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Você foi cadastrado em nossa base de atiradores.';
-            } else {
-                dataHTML = `
+                ` : `
                     <p><strong>Empresa:</strong> ${userData.nomeEmpresa}</p>
                     <p><strong>Cidade:</strong> ${userData.cidade}</p>
                     <p><strong>Email:</strong> ${userData.email}</p>
                     <p><strong>Tipo:</strong> Empresa</p>
                 `;
-                successMessage = 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Sua empresa foi cadastrada em nossa base de parceiros.';
+
+                const message = isAtirador
+                    ? 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Você foi cadastrado em nossa base de atiradores.'
+                    : 'Suas informações foram enviadas com sucesso para o sistema Capacita TG! Sua empresa foi cadastrada em nossa base de parceiros.';
+
+                return { dataHTML, message };
+            }
+            // Controle de modais
+            showModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             }
 
-            userDataDisplay.innerHTML = dataHTML;
-            document.getElementById('successMessage').textContent = successMessage;
-            
-            showModal('successModal');
+            hideModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
         }
+
+        // ========== INICIALIZAÇÃO ==========
+        
+        // Inicializa o sistema quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            new CapacitaTGManager();
+        });
+
+        window.CapacitaTG = {
+            getCityTG: (cityKey) => CIDADES_TG[cityKey],
+            getCityLinks: (cityKey) => LINKS_POR_CIDADE.get(cityKey),
+            getAllCities: () => Object.keys(CIDADES_TG)
+        };
     </script>
 </body>
 </html>
