@@ -1,81 +1,78 @@
 const express = require('express');
-const fs = require('fs').promises;
-const path = require('path');
 const cors = require('cors');
+const { kv } = require('@vercel/kv'); // Importa o cliente do Vercel KV
 
 const app = express();
-const PORT = process.env.PORT || 3001;
-const COURSES_FILE = path.join(__dirname, 'courses.json');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..')));
 
 
+// Função para ler os cursos do Vercel KV
 async function readCourses() {
   try {
-    const data = await fs.readFile(COURSES_FILE, 'utf8');
-    return JSON.parse(data);
+    // Busca os dados da chave 'courses'. Se não existir, retorna um array vazio.
+    const courses = await kv.get('courses');
+    return courses || [];
   } catch (error) {
-    console.error('Error reading courses file:', error);
-    return { courses: [] };
+    console.error('Error reading courses from Vercel KV:', error);
+    return [];
   }
 }
 
-
+// Função para escrever os cursos no Vercel KV
 async function writeCourses(coursesData) {
   try {
-    await fs.writeFile(COURSES_FILE, JSON.stringify(coursesData, null, 2));
+    // Salva o array completo de cursos na chave 'courses'
+    await kv.set('courses', coursesData);
     return true;
   } catch (error) {
-    console.error('Error writing courses file:', error);
+    console.error('Error writing courses to Vercel KV:', error);
     return false;
   }
 }
 
-
+// Função para gerar um ID único
 function generateId() {
   return Date.now().toString() + Math.random().toString(36).substr(2, 9);
 }
 
-// Routes
 
-
+// GET /api/courses - Pega todos os cursos
 app.get('/api/courses', async (req, res) => {
   try {
-    const coursesData = await readCourses();
-    res.json(coursesData.courses);
+    const courses = await readCourses();
+    res.json(courses);
   } catch (error) {
-    console.error('Error fetching courses:', error);
+  {console.error('Error fetching courses:', error);}
     res.status(500).json({ error: 'Failed to fetch courses' });
   }
 });
 
-
+// GET /api/courses/:page - Pega cursos por página
 app.get('/api/courses/:page', async (req, res) => {
   try {
     const { page } = req.params;
-    const coursesData = await readCourses();
-    const filteredCourses = coursesData.courses.filter(course => course.page === page);
+    const allCourses = await readCourses();
+    const filteredCourses = allCourses.filter(course => course.page === page);
     res.json(filteredCourses);
-  } catch (error) {
-    console.error('Error fetching courses by page:', error);
+  } catch (error)
+  {  console.error('Error fetching courses by page:', error);}
     res.status(500).json({ error: 'Failed to fetch courses' });
   }
-});
+);
 
-// POST /api/courses - Add new course
+// POST /api/courses - Adiciona um novo curso
 app.post('/api/courses', async (req, res) => {
   try {
     const { title, category, description, imageUrl, courseUrl, page } = req.body;
 
-    // Validação
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const coursesData = await readCourses();
+    const allCourses = await readCourses();
     const newCourse = {
       id: generateId(),
       title,
@@ -86,9 +83,9 @@ app.post('/api/courses', async (req, res) => {
       page
     };
 
-    coursesData.courses.push(newCourse);
+    allCourses.push(newCourse);
     
-    const success = await writeCourses(coursesData);
+    const success = await writeCourses(allCourses);
     if (!success) {
       return res.status(500).json({ error: 'Failed to save course' });
     }
@@ -100,37 +97,27 @@ app.post('/api/courses', async (req, res) => {
   }
 });
 
-// PUT /api/courses/:id - Update course
+// PUT /api/courses/:id - Atualiza um curso
 app.put('/api/courses/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { title, category, description, imageUrl, courseUrl, page } = req.body;
 
-    // Validação
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const coursesData = await readCourses();
-    const courseIndex = coursesData.courses.findIndex(course => course.id === id);
+    const allCourses = await readCourses();
+    const courseIndex = allCourses.findIndex(course => course.id === id);
 
     if (courseIndex === -1) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    const updatedCourse = {
-      id,
-      title,
-      category,
-      description,
-      imageUrl,
-      courseUrl,
-      page
-    };
-
-    coursesData.courses[courseIndex] = updatedCourse;
+    const updatedCourse = { id, title, category, description, imageUrl, courseUrl, page };
+    allCourses[courseIndex] = updatedCourse;
     
-    const success = await writeCourses(coursesData);
+    const success = await writeCourses(allCourses);
     if (!success) {
       return res.status(500).json({ error: 'Failed to update course' });
     }
@@ -142,20 +129,20 @@ app.put('/api/courses/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/courses/:id - Delete course
+// DELETE /api/courses/:id - Deleta um curso
 app.delete('/api/courses/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const coursesData = await readCourses();
-    const courseIndex = coursesData.courses.findIndex(course => course.id === id);
+    const allCourses = await readCourses();
+    const courseIndex = allCourses.findIndex(course => course.id === id);
 
     if (courseIndex === -1) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    const deletedCourse = coursesData.courses.splice(courseIndex, 1)[0];
+    const deletedCourse = allCourses.splice(courseIndex, 1)[0];
     
-    const success = await writeCourses(coursesData);
+    const success = await writeCourses(allCourses);
     if (!success) {
       return res.status(500).json({ error: 'Failed to delete course' });
     }
@@ -167,22 +154,16 @@ app.delete('/api/courses/:id', async (req, res) => {
   }
 });
 
-
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-
+// Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server em caso de desenvolvimento
-/*app.listen(PORT, () => {
-  console.log(`🚀 Capacita TG API Server running on port ${PORT}`);
-  console.log(`📚 Courses API available at http://localhost:${PORT}/api/courses`);
-  console.log(`🏥 Health check at http://localhost:${PORT}/api/health`);
-});*/
-
+// Exporta o app para a Vercel
 module.exports = app;
