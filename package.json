@@ -1,4 +1,9 @@
 {
+  "name": "capacita-tg-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "vercel-build": "echo 'No build required'"
+  },
   "dependencies": {
     "@vercel/speed-insights": "^1.2.0"
   }
