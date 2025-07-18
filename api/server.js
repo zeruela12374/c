@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
-// Utility function to read courses from file
+
 async function readCourses() {
   try {
     const data = await fs.readFile(COURSES_FILE, 'utf8');
@@ -23,7 +23,7 @@ async function readCourses() {
   }
 }
 
-// Utility function to write courses to file
+
 async function writeCourses(coursesData) {
   try {
     await fs.writeFile(COURSES_FILE, JSON.stringify(coursesData, null, 2));
@@ -34,14 +34,14 @@ async function writeCourses(coursesData) {
   }
 }
 
-// Generate unique ID
+
 function generateId() {
   return Date.now().toString() + Math.random().toString(36).substr(2, 9);
 }
 
 // Routes
 
-// GET /api/courses - Get all courses
+
 app.get('/api/courses', async (req, res) => {
   try {
     const coursesData = await readCourses();
@@ -52,7 +52,7 @@ app.get('/api/courses', async (req, res) => {
   }
 });
 
-// GET /api/courses/:page - Get courses by page
+
 app.get('/api/courses/:page', async (req, res) => {
   try {
     const { page } = req.params;
@@ -70,7 +70,7 @@ app.post('/api/courses', async (req, res) => {
   try {
     const { title, category, description, imageUrl, courseUrl, page } = req.body;
 
-    // Validation
+    // Validação
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
     }
@@ -106,7 +106,7 @@ app.put('/api/courses/:id', async (req, res) => {
     const { id } = req.params;
     const { title, category, description, imageUrl, courseUrl, page } = req.body;
 
-    // Validation
+    // Validação
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
     }
@@ -167,18 +167,18 @@ app.delete('/api/courses/:id', async (req, res) => {
   }
 });
 
-// Health check endpoint
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Error handling middleware
+
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
+// Start server em caso de desenvolvimento
 /*app.listen(PORT, () => {
   console.log(`🚀 Capacita TG API Server running on port ${PORT}`);
   console.log(`📚 Courses API available at http://localhost:${PORT}/api/courses`);

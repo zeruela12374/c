@@ -10,7 +10,7 @@ class AdminDashboard {
     }
 
     init() {
-        // Check authentication
+        // Verifica se o usuário está logado
         if (!this.isLoggedIn()) {
             window.location.href = 'index.html';
             return;
@@ -24,7 +24,7 @@ class AdminDashboard {
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', this.logout.bind(this));
 
-        // Add course button
+        // Botão de adicionar curso
         document.getElementById('addCourseBtn').addEventListener('click', () => {
             this.openCourseModal();
         });
@@ -65,7 +65,7 @@ class AdminDashboard {
         
         if (!loggedIn || !loginTime) return false;
         
-        // Check if login is still valid (24 hours)
+        // Checa se o login foi feito há mais de 24 horas
         const now = Date.now();
         const loginTimestamp = parseInt(loginTime);
         const twentyFourHours = 24 * 60 * 60 * 1000;
@@ -203,7 +203,7 @@ class AdminDashboard {
         modalTitle.textContent = this.isEditing ? 'Editar Curso' : 'Adicionar Novo Curso';
 
         if (this.isEditing) {
-            // Fill form with course data
+
             document.getElementById('courseTitle').value = course.title;
             document.getElementById('courseCategory').value = course.category;
             document.getElementById('courseDescription').value = course.description;
@@ -238,7 +238,7 @@ class AdminDashboard {
             page: formData.get('page')
         };
 
-        // Validation
+        // Validação dos dados do curso
         if (!this.validateCourseData(courseData)) {
             return;
         }
@@ -303,7 +303,7 @@ class AdminDashboard {
             }
         }
 
-        // Validate URLs
+        // Validar URLs
         try {
             new URL(data.imageUrl);
             new URL(data.courseUrl);
@@ -473,7 +473,7 @@ class AdminDashboard {
     }
 }
 
-// Initialize dashboard when DOM is loaded
+// Inicializa o dashboard quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
     window.adminDashboard = new AdminDashboard();
 });

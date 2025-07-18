@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <!-- Error Modal -->
+    <!-- Modal Erro -->
     <div class="modal-overlay" id="errorModal">
         <div class="modal">
             <div class="modal-header error">
@@ -73,7 +73,7 @@
                     this.hideModal('errorModal');
                 });
 
-                // Check if already logged in
+                
                 if (this.isLoggedIn()) {
                     window.location.href = 'dashboard.html';
                 }
@@ -87,16 +87,16 @@
                 
                 this.showLoading(true);
 
-                // Simulate API call delay
+                // Simular delay para autenticação
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
-                // Simple authentication (in production, this should be server-side)
+                // Autenticação simples
                 if (username === 'admin' && password === 'capacita2025') {
-                    // Store login state
+                    
                     localStorage.setItem('adminLoggedIn', 'true');
                     localStorage.setItem('adminLoginTime', Date.now().toString());
                     
-                    // Redirect to dashboard
+                    // Redirecionar para o dashboard
                     window.location.href = 'dashboard.html';
                 } else {
                     this.showLoading(false);
@@ -139,7 +139,7 @@
                 
                 if (!loggedIn || !loginTime) return false;
                 
-                // Check if login is still valid (24 hours)
+                // Checa se o login foi feito há mais de 24 horas
                 const now = Date.now();
                 const loginTimestamp = parseInt(loginTime);
                 const twentyFourHours = 24 * 60 * 60 * 1000;
@@ -154,7 +154,7 @@
             }
         }
 
-        // Initialize login system
+        // Inicializa o AdminLogin quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', () => {
             new AdminLogin();
         });

@@ -1417,3 +1417,33 @@ html {
         border: 2px solid currentColor;
     }
 }
+
+/* Estilo para o botão do Painel Administrativo */
+.btn-admin {
+    background-color: transparent;
+    color: #cddc39; /* Cor de destaque para diferenciar */
+    border: 2px solid #cddc39;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    text-decoration: none; /* Remove sublinhado do link */
+}
+
+.btn-admin:hover {
+    background-color: #cddc39;
+    color: #2e3d28;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+    .btn-admin {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
