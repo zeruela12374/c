@@ -179,10 +179,10 @@ app.use((error, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
   console.log(`🚀 Capacita TG API Server running on port ${PORT}`);
   console.log(`📚 Courses API available at http://localhost:${PORT}/api/courses`);
   console.log(`🏥 Health check at http://localhost:${PORT}/api/health`);
-});
+});*/
 
 module.exports = app;
