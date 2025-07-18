@@ -1,0 +1,85 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "title": "Empreendedorismo e Inovação",
+      "category": "Fundação Bradesco - 12 horas",
+      "description": "Desenvolva habilidades empreendedoras e aprenda sobre inovação empresarial.",
+      "imageUrl": "https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg",
+      "courseUrl": "https://www.ev.org.br/cursos/empreendedorismo-e-inovacao",
+      "page": "empreend.html"
+    },
+    {
+      "id": "2",
+      "title": "Estratégia de Negócios",
+      "category": "Fundação Bradesco - 20 horas",
+      "description": "Aprenda planejamento estratégico e desenvolvimento de estratégias empresariais.",
+      "imageUrl": "https://images.pexels.com/photos/8867482/pexels-photo-8867482.jpeg",
+      "courseUrl": "https://www.ev.org.br/cursos/estrategia-de-negocios",
+      "page": "empreend.html"
+    },
+    {
+      "id": "3",
+      "title": "Gestão Ágil - Descomplica",
+      "category": "SEBRAE - 24 horas",
+      "description": "Desenvolva competências em gestão ágil e inovação empresarial.",
+      "imageUrl": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg",
+      "courseUrl": "https://sebrae.com.br/sites/PortalSebrae/cursosonline/inovacao-sebraerj-descomplica,0fa516e04c059810VgnVCM1000001b00320aRCRD",
+      "page": "empreend.html"
+    },
+    {
+      "id": "4",
+      "title": "Atendimento ao Público",
+      "category": "Fundação Bradesco - 10 horas",
+      "description": "Desenvolva habilidades essenciais para atendimento e comunicação com o público.",
+      "imageUrl": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg",
+      "courseUrl": "https://www.ev.org.br/cursos/atendimento-ao-publico",
+      "page": "primeiroemprego.html"
+    },
+    {
+      "id": "5",
+      "title": "Ética e Relacionamento no Trabalho",
+      "category": "Sest Senat - 30 horas",
+      "description": "Construa uma carreira sólida com estratégias de desenvolvimento profissional.",
+      "imageUrl": "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg",
+      "courseUrl": "https://digital.sestsenat.org.br/cursos/etica-e-relacionamento-no-trabalho-2",
+      "page": "primeiroemprego.html"
+    },
+    {
+      "id": "6",
+      "title": "Educação Financeira",
+      "category": "Fundação Bradesco - 04 horas",
+      "description": "Aprenda a gerenciar suas finanças pessoais de uma maneira didática e assertiva.",
+      "imageUrl": "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg",
+      "courseUrl": "https://www.ev.org.br/cursos/educacao-financeira",
+      "page": "financ.html"
+    },
+    {
+      "id": "7",
+      "title": "Hábitos saudáveis: o guia para construir os seus com a família",
+      "category": "Vida Saudável",
+      "description": "Aprenda os princípios de uma alimentação balanceada e seus benefícios para a saúde.",
+      "imageUrl": "https://images.pexels.com/photos/3768140/pexels-photo-3768140.jpeg",
+      "courseUrl": "https://vidasaudavel.einstein.br/habitos-saudaveis/",
+      "page": "habitos.html"
+    },
+    {
+      "id": "8",
+      "title": "Saúde Mental e Saúde da Família",
+      "category": "Vida e Saúde - 10 horas",
+      "description": "Concepções de saúde mental de equipes de saúde da família",
+      "imageUrl": "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg",
+      "courseUrl": "https://cursosabeline.com.br/curso/gratis/saude-mental-e-saude-da-familia",
+      "page": "habitos.html"
+    },
+    {
+      "id": "9",
+      "title": "Cursos Disponíveis - IFRS",
+      "category": "Plataforma de Cursos Moodle",
+      "description": "A plataforma de cursos do IFRS é um ambiente online que oferece cursos em formato EAD.",
+      "imageUrl": "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
+      "courseUrl": "https://moodle.ifrs.edu.br/course/index.php?categoryid=151",
+      "page": "novoemp.html"
+    }
+  ]
+}
