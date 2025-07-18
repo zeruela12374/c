@@ -169,12 +169,15 @@ class AdminDashboard {
         const job = this.courses.filter(c => c.page === 'primeiroemprego.html').length;
         const finance = this.courses.filter(c => c.page === 'financ.html').length;
         const newjob = this.courses.filter(c => c.page === 'novoemp.html').length;
+        const habitos = this.courses.filter(c => c.page === 'habitos.html').length;
 
         document.getElementById('totalCourses').textContent = total;
         document.getElementById('empreendCourses').textContent = empreend;
         document.getElementById('jobCourses').textContent = job;
         document.getElementById('financeCourses').textContent = finance;
         document.getElementById('NewjobCourses').textContent = newjob;
+        document.getElementById('habitosCourses').textContent = habitos;
+        
     }
 
     applyFilters() {
