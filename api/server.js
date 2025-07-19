@@ -66,7 +66,7 @@ app.get('/api/courses/:page', async (req, res) => {
 // POST /api/courses - Adiciona um novo curso
 app.post('/api/courses', async (req, res) => {
   try {
-    const { title, category, description, imageUrl, courseUrl, page } = req.body;
+    const { title, category, description, imageUrl, courseUrl, page, downloadUrl } = req.body;
 
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
