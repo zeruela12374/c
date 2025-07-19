@@ -80,7 +80,8 @@ app.post('/api/courses', async (req, res) => {
       description,
       imageUrl,
       courseUrl,
-      page
+      page,
+      downloadUrl,
     };
 
     allCourses.push(newCourse);
@@ -101,7 +102,7 @@ app.post('/api/courses', async (req, res) => {
 app.put('/api/courses/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, category, description, imageUrl, courseUrl, page } = req.body;
+    const { title, category, description, imageUrl, courseUrl, page, downloadUrl } = req.body;
 
     if (!title || !category || !description || !imageUrl || !courseUrl || !page) {
       return res.status(400).json({ error: 'All fields are required' });
@@ -114,7 +115,7 @@ app.put('/api/courses/:id', async (req, res) => {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    const updatedCourse = { id, title, category, description, imageUrl, courseUrl, page };
+    const updatedCourse = { id, title, category, description, imageUrl, courseUrl, page, downloadUrl };
     allCourses[courseIndex] = updatedCourse;
     
     const success = await writeCourses(allCourses);

@@ -214,6 +214,7 @@ class AdminDashboard {
             document.getElementById('courseDescription').value = course.description;
             document.getElementById('courseImageUrl').value = course.imageUrl;
             document.getElementById('courseUrl').value = course.courseUrl;
+            document.getElementById('downloadUrl').value = course.downloadUrl || ''; // Preenche com o valor ou string vazia
             document.getElementById('coursePage').value = course.page;
             this.updateImagePreview();
         } else {
@@ -240,7 +241,8 @@ class AdminDashboard {
             description: formData.get('description'),
             imageUrl: formData.get('imageUrl'),
             courseUrl: formData.get('courseUrl'),
-            page: formData.get('page')
+            page: formData.get('page'),
+            downloadUrl: formData.get('downloadUrl') || null // Salva null se o campo estiver vazio
         };
 
         // Validação dos dados do curso
