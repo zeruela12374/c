@@ -1447,3 +1447,6 @@ html {
         font-size: 0.8rem;
     }
 }
+
+/* Import search styles */
+@import url('css/search.css');
