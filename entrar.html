@@ -192,6 +192,94 @@
             background: #5a6268;
         }
 
+        /* Estilos específicos para o modal de confirmação */
+        .confirmation-data {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .confirmation-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .confirmation-section h4 {
+            color: #2c5530;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+
+        .confirmation-item {
+            display: flex;
+            margin-bottom: 0.8rem;
+            align-items: flex-start;
+        }
+
+        .confirmation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .confirmation-label {
+            font-weight: 600;
+            color: #2c5530;
+            min-width: 140px;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .confirmation-value {
+            color: #333;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .confirmation-value.empty {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* Estilos para o spinner de loading */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-loading {
+            display: none;
+            align-items: center;
+        }
+
+        /* Responsividade para o modal de confirmação */
+        @media (max-width: 768px) {
+            .confirmation-item {
+                flex-direction: column;
+            }
+
+            .confirmation-label {
+                min-width: auto;
+                margin-right: 0;
+                margin-bottom: 0.3rem;
+            }
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -340,7 +428,7 @@
                 <div class="header-right">
                     <div class="header-actions">
                         <div class="search-container">
-                            <input type="search" placeholder="Pesquisar cursos..." aria-label="Pesquisar cursos" autocomplete="off">
+                            <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
                         </div>
                         
                     </div>
@@ -451,6 +539,33 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="/src/imgs/capacitatg.png" 
+                     alt="Logo Capacita TG">
+                <h3>Revise suas informações</h3>
+                <p>Verifique se todos os dados estão corretos antes de confirmar</p>
+            </div>
+            <div class="modal-content">
+                <div class="confirmation-data" id="confirmationData">
+                    <!-- Dados serão inseridos dinamicamente aqui -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="editDataBtn">Editar Dados</button>
+                <button class="btn btn-success" id="confirmSendBtn">
+                    <span class="btn-text">Confirmar e Enviar</span>
+                    <span class="btn-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        Enviando...
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="successModal">
         <div class="modal">
@@ -795,7 +910,99 @@
                 if (!this.validateForm()) return;
 
                 const userData = this.collectUserData();
-                this.submitToGoogleForms(userData);
+                this.showConfirmationModal(userData);
+            }
+
+            showConfirmationModal(userData) {
+                const confirmationData = document.getElementById('confirmationData');
+                confirmationData.innerHTML = this.buildConfirmationHTML(userData);
+                
+                // Armazenar dados temporariamente para envio posterior
+                this.tempUserData = userData;
+                
+                this.showModal('confirmationModal');
+            }
+
+            buildConfirmationHTML(userData) {
+                const isAtirador = userData.tipoUsuario === 'atirador';
+                
+                if (isAtirador) {
+                    return `
+                        <div class="confirmation-section">
+                            <h4>Dados Pessoais</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Nome Completo:</span>
+                                <span class="confirmation-value">${userData.nome}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Cidade:</span>
+                                <span class="confirmation-value">${userData.cidade}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">E-mail:</span>
+                                <span class="confirmation-value">${userData.email}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Telefone:</span>
+                                <span class="confirmation-value">${userData.telefone}</span>
+                            </div>
+                        </div>
+                        <div class="confirmation-section">
+                            <h4>Informações Profissionais</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Habilidades:</span>
+                                <span class="confirmation-value">${userData.habilidades}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Experiência:</span>
+                                <span class="confirmation-value ${!userData.experiencia ? 'empty' : ''}">${userData.experiencia || 'Não informado'}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Formação:</span>
+                                <span class="confirmation-value ${!userData.formacao ? 'empty' : ''}">${userData.formacao || 'Não informado'}</span>
+                            </div>
+                        </div>
+                        <div class="confirmation-section">
+                            <h4>Tipo de Usuário</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Categoria:</span>
+                                <span class="confirmation-value">Atirador</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="confirmation-section">
+                            <h4>Dados da Empresa</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Nome da Empresa:</span>
+                                <span class="confirmation-value">${userData.nomeEmpresa}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Cidade:</span>
+                                <span class="confirmation-value">${userData.cidade}</span>
+                            </div>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">E-mail:</span>
+                                <span class="confirmation-value">${userData.email}</span>
+                            </div>
+                        </div>
+                        <div class="confirmation-section">
+                            <h4>Necessidades da Empresa</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Informações:</span>
+                                <span class="confirmation-value ${!userData.informacoes ? 'empty' : ''}">${userData.informacoes || 'Não informado'}</span>
+                            </div>
+                        </div>
+                        <div class="confirmation-section">
+                            <h4>Tipo de Usuário</h4>
+                            <div class="confirmation-item">
+                                <span class="confirmation-label">Categoria:</span>
+                                <span class="confirmation-value">Empresa</span>
+                            </div>
+                        </div>
+                    `;
+                }
             }
 
             validateForm() {
@@ -873,7 +1080,7 @@
                 return data;
             }
 
-            submitToGoogleForms(userData) {
+            submitToGoogleForms(userData, showLoadingOnButton = false) {
                 const cityLinks = LINKS_POR_CIDADE.get(userData.cidadeKey);
                 if (!cityLinks) {
                     alert('Erro: Configuração não encontrada para a cidade selecionada.');
@@ -887,7 +1094,11 @@
                 const formUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
                 const formData = this.buildFormData(userData);
 
-                this.sendToGoogleForms(formUrl, formData, userData);
+                if (showLoadingOnButton) {
+                    this.sendToGoogleFormsWithLoading(formUrl, formData, userData);
+                } else {
+                    this.sendToGoogleForms(formUrl, formData, userData);
+                }
             }
 
             buildFormData(userData) {
@@ -912,6 +1123,37 @@
                 });
 
                 return formData;
+            }
+
+            async sendToGoogleFormsWithLoading(url, formData, userData) {
+                const confirmBtn = document.getElementById('confirmSendBtn');
+                const btnText = confirmBtn.querySelector('.btn-text');
+                const btnLoading = confirmBtn.querySelector('.btn-loading');
+                
+                // Mostrar loading
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'flex';
+                confirmBtn.disabled = true;
+                
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                } catch (error) {
+                    console.error('Erro no envio:', error);
+                } finally {
+                    // Restaurar botão
+                    btnText.style.display = 'block';
+                    btnLoading.style.display = 'none';
+                    confirmBtn.disabled = false;
+                    
+                    // Fechar modal de confirmação e mostrar sucesso
+                    this.hideModal('confirmationModal');
+                    this.showSuccessModal(userData);
+                    this.clearForm();
+                }
             }
 
             async sendToGoogleForms(url, formData, userData) {
@@ -995,7 +1237,25 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            new CapacitaTGManager();
+            const manager = new CapacitaTGManager();
+            
+            // Event listeners para o modal de confirmação
+            document.getElementById('editDataBtn').addEventListener('click', function() {
+                manager.hideModal('confirmationModal');
+            });
+            
+            document.getElementById('confirmSendBtn').addEventListener('click', function() {
+                if (manager.tempUserData) {
+                    manager.submitToGoogleForms(manager.tempUserData, true);
+                }
+            });
+            
+            // Fechar modal de confirmação clicando no overlay
+            document.getElementById('confirmationModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    manager.hideModal('confirmationModal');
+                }
+            });
         });
 
         window.CapacitaTG = {
@@ -1004,6 +1264,5 @@
             getAllCities: () => Object.keys(CIDADES_TG)
         };
     </script>
-    <script src="/src/js/search.js"></script>
 </body>
 </html>
