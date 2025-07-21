@@ -10,7 +10,7 @@
     <style>
         .btn-login.logged-in {
             background: rgba(255,255,255,0.95) !important;
-            color: #2c5530 !important;
+            color: #ff5100 !important; 
             padding: 0.5rem 1rem !important;
             min-width: 200px;
             text-align: left;
@@ -35,7 +35,7 @@
 
         .user-type-header {
             font-size: 0.7rem;
-            color: #6c757d;
+            color: #7f8c8d; 
             font-weight: 400;
         }
 
@@ -87,13 +87,13 @@
 
         .modal-header h3 {
             font-family: 'PT Serif', serif;
-            color: #2c5530;
+            color: #34495e; 
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
 
         .modal-header p {
-            color: #6c757d;
+            color: #7f8c8d; 
             font-size: 1rem;
         }
 
@@ -110,11 +110,11 @@
 
         .modal-info p {
             margin: 0.3rem 0;
-            color: #333;
+            color: #34495e;
         }
 
         .modal-info strong {
-            color: #2c5530;
+            color: #34495e;
         }
 
         .modal-actions {
@@ -129,21 +129,21 @@
         }
 
         .btn-danger {
-            background: #dc3545;
+            background: #e74c3c;
             color: white;
         }
 
         .btn-danger:hover {
-            background: #c82333;
+            background: #c0392b;
         }
 
         .btn-success {
-            background: #28a745;
+            background: #2ecc71;
             color: white;
         }
 
         .btn-success:hover {
-            background: #218838;
+            background: #27ae60;
         }
     </style>
 </head>
@@ -165,7 +165,6 @@
                         <ul>
                             <li><a href="entrar.html" class="nav-link">Cadastre-se</a></li>
                             <li><a href="index.html#parceiros" class="nav-link">Sobre Nós</a></li>
-                            <li><a href="index.html" class="nav-link">Notícias</a></li>
                             <li><a href="index.html#parceira" class="nav-link">Parceiros</a></li>
                             <li><a href="index.html#contato" class="nav-link">Contato</a></li>
                         </ul>
@@ -177,7 +176,7 @@
                         <div class="search-container">
                             <input type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
                         </div>
-                        <button class="btn btn-login" id="headerLoginBtn">Acessar</button>
+                        <a href="entrar.html" class="btn btn-login" id="headerLoginBtn">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -188,8 +187,7 @@
         <div class="container">
             <h2>Cursos de Educação Financeira</h2>
             <div class="course-grid">
-                <!-- Cursos carregados dinamicamente -->
-        </div>
+                </div>
     </section>
 
     <footer id="contato">
@@ -205,7 +203,6 @@
                     <ul>
                         <li><a href="entrar.html" class="nav-link">Cadastre-se</a></li>
                         <li><a href="index.html#parceiros" class="nav-link">Sobre Nós</a></li>
-                        <li><a href="index.html" class="nav-link">Notícias</a></li>
                         <li><a href="index.html#parceira" class="nav-link">Parceiros</a></li>
                         <li><a href="#contato" class="nav-link">Contato</a></li>
                     </ul>
@@ -224,127 +221,6 @@
         </div>
     </footer>
 
-    <script>
-        function showModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function showSuccessModal(title, message) {
-            document.getElementById('successTitle').textContent = title;
-            document.getElementById('successMessage').textContent = message;
-            showModal('successModal');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoggedInUser();
-            setupModalEvents();
-        });
-
-        function setupModalEvents() {
-            document.querySelectorAll('.modal-overlay').forEach(overlay => {
-                overlay.addEventListener('click', function(e) {
-                    if (e.target === overlay) {
-                        hideModal(overlay.id);
-                    }
-                });
-            });
-
-            document.getElementById('modalAcessarSistema').addEventListener('click', function() {
-                hideModal('userProfileModal');
-                showModal('systemAccessModal');
-            });
-
-            document.getElementById('modalLogout').addEventListener('click', function() {
-                hideModal('userProfileModal');
-                showModal('logoutConfirmModal');
-            });
-
-            document.getElementById('cancelLogout').addEventListener('click', function() {
-                hideModal('logoutConfirmModal');
-            });
-
-            document.getElementById('confirmLogout').addEventListener('click', function() {
-                hideModal('logoutConfirmModal');
-                performLogout();
-            });
-
-            document.getElementById('closeSuccessModal').addEventListener('click', function() {
-                hideModal('successModal');
-            });
-
-            document.getElementById('confirmSystemAccess').addEventListener('click', function() {
-                hideModal('systemAccessModal');
-                showSuccessModal('Redirecionamento', 'Em desenvolvimento: aqui você seria redirecionado para o dashboard principal.');
-            });
-
-            document.getElementById('cancelLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-            });
-
-            document.getElementById('goToLogin').addEventListener('click', function() {
-                hideModal('loginRequiredModal');
-                window.location.href = 'entrar.html';
-            });
-        }
-
-        function checkLoggedInUser() {
-            const userData = localStorage.getItem('capacitaTgUser');
-            
-            if (userData) {
-                const user = JSON.parse(userData);
-                updateHeaderButton(user, true);
-            } else {
-                updateHeaderButton(null, false);
-            }
-        }
-
-        function updateHeaderButton(user, isLoggedIn) {
-            const headerLoginBtn = document.getElementById('headerLoginBtn');
-            
-            if (isLoggedIn && user) {
-                headerLoginBtn.innerHTML = `
-                    <div class="user-info-header">
-                        <span class="user-name-header">${user.nome.split(' ')[0]} ${user.nome.split(' ')[1] || ''}</span>
-                        <span class="user-type-header">${user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador'}</span>
-                    </div>
-                `;
-                headerLoginBtn.classList.add('logged-in');
-            } else {
-                headerLoginBtn.textContent = 'Acessar';
-                headerLoginBtn.classList.remove('logged-in');
-                headerLoginBtn.style.background = '';
-                headerLoginBtn.style.color = '';
-            }
-        }
-
-        function performLogout() {
-            localStorage.removeItem('capacitaTgUser');
-            updateHeaderButton(null, false);
-            showSuccessModal('Logout Realizado', 'Você foi desconectado com sucesso!');
-        }
-
-        document.getElementById('headerLoginBtn').addEventListener('click', function() {
-            const userData = localStorage.getItem('capacitaTgUser');
-            if (userData) {
-                const user = JSON.parse(userData);
-                document.getElementById('modalUserName').textContent = user.nome;
-                document.getElementById('modalUserEmail').textContent = user.email;
-                document.getElementById('modalUserType').textContent = 
-                    user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
-                showModal('userProfileModal');
-            } else {
-                showModal('loginRequiredModal');
-            }
-        });
-    </script>
     <script src="/src/js/course-loader.js"></script>
 </body>
 </html>

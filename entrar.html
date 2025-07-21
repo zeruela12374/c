@@ -10,7 +10,7 @@
     <style>
         .register-section {
             padding: 4rem 0;
-            background: #f8f9fa;
+            background: #f8f9fa; /* Fundo cinza claro */
         }
 
         .register-container {
@@ -34,13 +34,13 @@
 
         .register-header h2 {
             font-family: 'PT Serif', serif;
-            color: #2c5530;
+            color: #34495e; /* Cinza escuro */
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
         .register-header p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             font-size: 1.1rem;
         }
 
@@ -58,7 +58,7 @@
 
         .form-group label {
             font-weight: 600;
-            color: #2c5530;
+            color: #34495e; /* Cinza escuro */
             font-size: 1rem;
         }
 
@@ -66,7 +66,7 @@
         .form-group select,
         .form-group textarea {
             padding: 1rem;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
@@ -82,8 +82,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #4a7c59;
-            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+            border-color: #ff5100; /* Laranja Principal */
+            box-shadow: 0 0 0 3px rgba(255, 81, 0, 0.1);
         }
 
         .user-type-container {
@@ -105,7 +105,7 @@
             display: block;
             padding: 1rem;
             background: #f8f9fa;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
@@ -114,13 +114,13 @@
         }
 
         .user-type-option input[type="radio"]:checked + .user-type-label {
-            background: #4a7c59;
+            background: #ff5100; /* Laranja Principal */
             color: white;
-            border-color: #4a7c59;
+            border-color: #ff5100; /* Laranja Principal */
         }
 
         .user-type-label:hover {
-            border-color: #4a7c59;
+            border-color: #ff5100; /* Laranja Principal */
         }
 
         .dynamic-fields {
@@ -129,7 +129,7 @@
             gap: 1.5rem;
             margin-top: 1rem;
             padding-top: 1.5rem;
-            border-top: 2px solid #e9ecef;
+            border-top: 2px solid #ecf0f1;
         }
 
         .dynamic-fields.active {
@@ -140,16 +140,16 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #e9ecef;
+            border-top: 1px solid #ecf0f1;
         }
 
         .register-footer p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             margin-bottom: 1rem;
         }
 
         .register-footer a {
-            color: #4a7c59;
+            color: #ff5100; /* Laranja Principal */
             text-decoration: none;
             font-weight: 600;
         }
@@ -159,7 +159,7 @@
         }
 
         .btn-primary {
-            background: #4a7c59;
+            background: #ff5100; /* Laranja Principal */
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -171,13 +171,13 @@
         }
 
         .btn-primary:hover {
-            background: #3d5f47;
+            background: #ff6600; /* Laranja de Destaque */
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 81, 0, 0.3);
         }
 
         .btn-secondary {
-            background: #6c757d;
+            background: #7f8c8d; /* Cinza */
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -189,7 +189,7 @@
         }
 
         .btn-secondary:hover {
-            background: #5a6268;
+            background: #95a5a6; /* Cinza mais claro */
         }
 
         .modal-overlay {
@@ -240,13 +240,13 @@
 
         .modal-header h3 {
             font-family: 'PT Serif', serif;
-            color: #2c5530;
+            color: #34495e; /* Cinza escuro */
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
 
         .modal-header p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             font-size: 1rem;
         }
 
@@ -263,11 +263,11 @@
 
         .modal-info p {
             margin: 0.3rem 0;
-            color: #333;
+            color: #34495e; /* Texto cinza escuro */
         }
 
         .modal-info strong {
-            color: #2c5530;
+            color: #34495e; /* Cinza escuro */
         }
 
         .modal-actions {
@@ -282,12 +282,12 @@
         }
 
         .btn-success {
-            background: #28a745;
+            background: #2ecc71; /* Verde esmeralda */
             color: white;
         }
 
         .btn-success:hover {
-            background: #218838;
+            background: #27ae60; /* Verde escuro */
         }
 
         .two-columns {
@@ -330,7 +330,6 @@
                         <ul>
                             <li><a href="entrar.html" class="nav-link">Cadastre-se</a></li>
                             <li><a href="index.html#parceiros" class="nav-link">Sobre Nós</a></li>
-                            <li><a href="index.html" class="nav-link">Notícias</a></li>
                             <li><a href="index.html#parceira" class="nav-link">Parceiros</a></li>
                             <li><a href="index.html#contato" class="nav-link">Contato</a></li>
                         </ul>
@@ -483,7 +482,6 @@
                     <ul>
                         <li><a href="entrar.html" class="nav-link">Cadastre-se</a></li>
                         <li><a href="index.html#parceiros" class="nav-link">Sobre Nós</a></li>
-                        <li><a href="index.html" class="nav-link">Notícias</a></li>
                         <li><a href="index.html#parceira" class="nav-link">Parceiros</a></li>
                         <li><a href="#contato" class="nav-link">Contato</a></li>
                     </ul>
