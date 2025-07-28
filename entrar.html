@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cadastre-se na plataforma Capacita TG como Atirador ou Empresa e tenha acesso a cursos e talentos.">
+    <meta name="keywords" content="cadastro, entrar, registro, atirador, empresa, capacita tg">
     <title>Capacita TG - Cadastro</title>
-    <link rel="icon" href="/src/imgs/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/src/imgs/favicon.ico" type="image-x-icon">
     <link rel="stylesheet" href="/src/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
     <style>
         .register-section {
             padding: 4rem 0;
-            background: #f8f9fa;
+            background: #ecf0f1; /* Fundo cinza claro */
         }
 
         .register-container {
@@ -34,13 +36,13 @@
 
         .register-header h2 {
             font-family: 'PT Serif', serif;
-            color: #2c5530;
+            color: #2c3e50; /* Azul escuro */
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
         .register-header p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             font-size: 1.1rem;
         }
 
@@ -58,7 +60,7 @@
 
         .form-group label {
             font-weight: 600;
-            color: #2c5530;
+            color: #2c3e50; /* Azul escuro */
             font-size: 1rem;
         }
 
@@ -66,7 +68,7 @@
         .form-group select,
         .form-group textarea {
             padding: 1rem;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
@@ -82,8 +84,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #4a7c59;
-            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+            border-color: #f39c12; /* Laranja vibrante */
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
         }
 
         .user-type-container {
@@ -105,7 +107,7 @@
             display: block;
             padding: 1rem;
             background: #f8f9fa;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
@@ -114,13 +116,13 @@
         }
 
         .user-type-option input[type="radio"]:checked + .user-type-label {
-            background: #4a7c59;
+            background: #f39c12; /* Laranja vibrante */
             color: white;
-            border-color: #4a7c59;
+            border-color: #f39c12; /* Laranja vibrante */
         }
 
         .user-type-label:hover {
-            border-color: #4a7c59;
+            border-color: #f39c12; /* Laranja vibrante */
         }
 
         .dynamic-fields {
@@ -129,7 +131,7 @@
             gap: 1.5rem;
             margin-top: 1rem;
             padding-top: 1.5rem;
-            border-top: 2px solid #e9ecef;
+            border-top: 2px solid #ecf0f1;
         }
 
         .dynamic-fields.active {
@@ -140,16 +142,16 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #e9ecef;
+            border-top: 1px solid #ecf0f1;
         }
 
         .register-footer p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             margin-bottom: 1rem;
         }
 
         .register-footer a {
-            color: #4a7c59;
+            color: #f39c12; /* Laranja vibrante */
             text-decoration: none;
             font-weight: 600;
         }
@@ -159,7 +161,7 @@
         }
 
         .btn-primary {
-            background: #4a7c59;
+            background: #f39c12; /* Laranja vibrante */
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -171,13 +173,13 @@
         }
 
         .btn-primary:hover {
-            background: #3d5f47;
+            background: #e67e22; /* Laranja mais escuro */
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
         }
 
         .btn-secondary {
-            background: #6c757d;
+            background: #7f8c8d; /* Cinza */
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -189,7 +191,7 @@
         }
 
         .btn-secondary:hover {
-            background: #5a6268;
+            background: #95a5a6; /* Cinza mais claro */
         }
 
         .modal-overlay {
@@ -240,13 +242,13 @@
 
         .modal-header h3 {
             font-family: 'PT Serif', serif;
-            color: #2c5530;
+            color: #2c3e50; /* Azul escuro */
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
 
         .modal-header p {
-            color: #6c757d;
+            color: #7f8c8d; /* Cinza */
             font-size: 1rem;
         }
 
@@ -263,11 +265,11 @@
 
         .modal-info p {
             margin: 0.3rem 0;
-            color: #333;
+            color: #34495e; /* Texto cinza escuro */
         }
 
         .modal-info strong {
-            color: #2c5530;
+            color: #2c3e50; /* Azul escuro */
         }
 
         .modal-actions {
@@ -282,12 +284,12 @@
         }
 
         .btn-success {
-            background: #28a745;
+            background: #2ecc71; /* Verde esmeralda */
             color: white;
         }
 
         .btn-success:hover {
-            background: #218838;
+            background: #27ae60; /* Verde escuro */
         }
 
         .two-columns {
@@ -353,7 +355,7 @@
             <div class="container">
                 <div class="register-container">
                     <div class="register-header">
-                        <img src="/src/imgs/capacitatg.png" 
+                        <img src="/src/imgs/insgtg.png" 
                              alt="Logo Capacita TG">
                         <h2>Cadastro de Informações</h2>
                         <p>Preencha seus dados para participar da plataforma Capacita TG</p>
