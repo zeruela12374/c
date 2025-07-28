@@ -707,7 +707,7 @@ header.header-visible {
 }
 
 .main-image {
-    width: 85%;
+    width: 80%;
     height: auto;
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
@@ -725,7 +725,7 @@ header.header-visible {
 
 .program-description p {
     margin-bottom: 1.5rem;
-    font-size: 1.05rem;
+    font-size: 1.20rem;
 }
 
 .program-description strong {
