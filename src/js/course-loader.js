@@ -110,30 +110,24 @@ class CourseLoader {
     
     
     card.innerHTML = `
-               <div class="image-container">
-                   <img src="${this.escapeHtml(course.imageUrl)}" 
-                         alt="${this.escapeHtml(course.title)}"
-                         onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg'">
-                        alt="${this.escapeHtml(course.title)}"
-                        onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg'">
-               </div>
-               <div class="course-info">
-                   <h3>${this.escapeHtml(course.title)}</h3>
-                   <p class="course-category">${this.escapeHtml(course.category)}</p>
-                   <p>${this.escapeHtml(course.description)}</p>
-                    <a href="${this.escapeHtml(course.courseUrl)}" 
-                       target="_blank" 
-                       class="btn btn-secondary"
-                       rel="noopener noreferrer">
-                       ${this.getButtonText(course.courseUrl)}
-                    <a href="${this.escapeHtml(buttonUrl)}" 
-                        target="_blank" 
-                        class="btn btn-secondary"
-                        rel="noopener noreferrer"
-                        ${downloadAttribute}>  ${this.escapeHtml(buttonText)}
-                   </a>
-               </div>
-           `;
+            <div class="image-container">
+                <img src="${this.escapeHtml(course.imageUrl)}"
+                      alt="${this.escapeHtml(course.title)}"
+                      onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg'">
+            </div>
+            <div class="course-info">
+                <h3>${this.escapeHtml(course.title)}</h3>
+                <p class="course-category">${this.escapeHtml(course.category)}</p>
+                <p>${this.escapeHtml(course.description)}</p>
+                 <a href="${this.escapeHtml(buttonUrl)}"
+                     target="_blank"
+                     class="btn btn-secondary"
+                     rel="noopener noreferrer"
+                     ${downloadAttribute}>
+                     ${this.escapeHtml(buttonText)}
+                </a>
+            </div>
+        `;
     
     return card;
     }
