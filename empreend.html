@@ -147,6 +147,54 @@
         .btn-success:hover {
             background: #218838;
         }
+
+        /* Estilos para os filtros */
+        .filters-container {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #2e3d28;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+        }
+        
+        #clear-filters-btn {
+            background-color: #6c757d;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
     </style>
 </head>
 <body>
@@ -188,6 +236,31 @@
     <section id="cursos" class="courses-section">
         <div class="container">
             <h2>Cursos de Empreendedorismo</h2>
+            <div class="container">
+                <h2>Cursos de Empreendedorismo</h2>
+    
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="keyword-search">Busca por Termo</label>
+                        <input type="text" id="keyword-search" placeholder="Ex: Gestão, Inovação...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="institution-filter">Instituição</label>
+                        <select id="institution-filter">
+                            <option value="">Todas</option>
+                            </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="duration-filter">Carga Horária</label>
+                        <select id="duration-filter">
+                            <option value="">Qualquer</option>
+                            </select>
+                    </div>
+                    <button id="clear-filters-btn" class="btn btn-secondary">Limpar Filtros</button>
+                </div>
+                <div class="course-grid">
+                    </div>
+            </div>
             <div class="course-grid">
                 <!-- Cursos carregados dinamicamente -->
             </div>

@@ -2,6 +2,7 @@ class CourseLoader {
     constructor() {
         this.apiUrl = '/api';
         this.currentPage = this.getCurrentPage();
+        this.allCourses = []; // Armazena todos os cursos da página
         this.init();
     }
 
@@ -15,7 +16,6 @@ class CourseLoader {
         const path = window.location.pathname;
         const filename = path.split('/').pop();
         
-        // Map of valid course pages
         const validPages = [
             'empreend.html',
             'primeiroemprego.html', 
@@ -28,215 +28,183 @@ class CourseLoader {
     }
 
     async loadCourses() {
+        const courseGrid = document.querySelector('.course-grid');
+        if (!courseGrid) return;
+
+        this.showLoadingState(courseGrid);
+
         try {
-            const courseGrid = document.querySelector('.course-grid');
-            if (!courseGrid) {
-                console.warn('Course grid not found on this page');
-                return;
-            }
-
-            // Show loading state
-            this.showLoadingState(courseGrid);
-
-            const response = await fetch(`${this.apiUrl}/courses/${this.currentPage}`);
+            // Usamos o novo parâmetro `pageName` da API
+            const response = await fetch(`${this.apiUrl}/courses?pageName=${this.currentPage}`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const courses = await response.json();
-            this.renderCourses(courses, courseGrid);
+            this.allCourses = await response.json();
+            this.renderCourses(this.allCourses, courseGrid);
+            this.populateFilters(); // Popula os filtros com base nos cursos carregados
+            this.setupFilterListeners(); // Configura os eventos dos filtros
 
         } catch (error) {
             console.error('Error loading courses:', error);
-            this.showErrorState(document.querySelector('.course-grid'));
+            this.showErrorState(courseGrid);
         }
+    }
+
+    populateFilters() {
+        const institutions = new Set();
+        const durations = new Set();
+        const durationRegex = /(\d+\s*horas?)/i;
+
+        this.allCourses.forEach(course => {
+            // Extrai a instituição
+            const institution = course.category.split('-')[0].trim();
+            if (institution) institutions.add(institution);
+
+            // Extrai a duração
+            const durationMatch = course.category.match(durationRegex);
+            if (durationMatch) durations.add(durationMatch[0]);
+        });
+
+        const institutionFilter = document.getElementById('institution-filter');
+        const durationFilter = document.getElementById('duration-filter');
+
+        if (institutionFilter) {
+            [...institutions].sort().forEach(inst => {
+                const option = document.createElement('option');
+                option.value = inst;
+                option.textContent = inst;
+                institutionFilter.appendChild(option);
+            });
+        }
+
+        if (durationFilter) {
+            [...durations].sort((a, b) => parseInt(a) - parseInt(b)).forEach(dur => {
+                const option = document.createElement('option');
+                option.value = dur;
+                option.textContent = dur;
+                durationFilter.appendChild(option);
+            });
+        }
+    }
+
+    setupFilterListeners() {
+        document.getElementById('keyword-search')?.addEventListener('input', () => this.applyFilters());
+        document.getElementById('institution-filter')?.addEventListener('change', () => this.applyFilters());
+        document.getElementById('duration-filter')?.addEventListener('change', () => this.applyFilters());
+        document.getElementById('clear-filters-btn')?.addEventListener('click', () => this.clearFilters());
+    }
+
+    applyFilters() {
+        const keyword = document.getElementById('keyword-search').value.toLowerCase();
+        const institution = document.getElementById('institution-filter').value;
+        const duration = document.getElementById('duration-filter').value;
+
+        const filteredCourses = this.allCourses.filter(course => {
+            const matchesKeyword = course.title.toLowerCase().includes(keyword) || course.description.toLowerCase().includes(keyword);
+            const matchesInstitution = !institution || course.category.includes(institution);
+            const matchesDuration = !duration || course.category.includes(duration);
+
+            return matchesKeyword && matchesInstitution && matchesDuration;
+        });
+
+        this.renderCourses(filteredCourses, document.querySelector('.course-grid'));
+    }
+
+    clearFilters() {
+        document.getElementById('keyword-search').value = '';
+        document.getElementById('institution-filter').value = '';
+        document.getElementById('duration-filter').value = '';
+        this.applyFilters();
     }
 
     showLoadingState(container) {
-        container.innerHTML = `
-            <div class="loading-courses">
-                <div class="loading-spinner"></div>
-                <p>Carregando cursos...</p>
-            </div>
-        `;
+        container.innerHTML = `<div class="loading-courses"><div class="loading-spinner"></div><p>Carregando cursos...</p></div>`;
     }
 
     showErrorState(container) {
-        container.innerHTML = `
-            <div class="error-courses">
-                <div class="error-icon">⚠️</div>
-                <h3>Erro ao carregar cursos</h3>
-                <p>Não foi possível carregar os cursos. Verifique sua conexão e tente novamente.</p>
-                <button class="btn btn-primary" onclick="location.reload()">Tentar Novamente</button>
-            </div>
-        `;
+        container.innerHTML = `<div class="error-courses"><div class="error-icon">⚠️</div><h3>Erro ao carregar cursos</h3><p>Tente novamente mais tarde.</p></div>`;
     }
 
     renderCourses(courses, container) {
+        if (!container) return;
         if (courses.length === 0) {
-            container.innerHTML = `
-                <div class="no-courses">
-                    <div class="no-courses-icon">📚</div>
-                    <h3>Nenhum curso disponível</h3>
-                    <p>Novos cursos serão adicionados em breve.</p>
-                </div>
-            `;
+            container.innerHTML = `<div class="no-courses"><div class="no-courses-icon">📚</div><h3>Nenhum curso encontrado</h3><p>Tente ajustar seus filtros ou verifique novamente mais tarde.</p></div>`;
             return;
         }
 
-        // Clear container and add courses
         container.innerHTML = '';
-        
         courses.forEach(course => {
             const courseCard = this.createCourseCard(course);
             container.appendChild(courseCard);
         });
-
-        // Add animation to cards
         this.animateCourseCards();
     }
 
     createCourseCard(course) {
         const card = document.createElement('div');
         card.className = 'course-card';
-        card.setAttribute('data-course-id', course.id);
-
-        // Lógica para determinar o texto e o link do botão
+        
         const isDownload = course.downloadUrl && course.downloadUrl.trim() !== '';
-        const buttonText = isDownload ? 'Baixar' : this.getButtonText(course.courseUrl);
+        const buttonText = isDownload ? 'Baixar Material' : 'Inscreva-se';
         const buttonUrl = isDownload ? course.downloadUrl : course.courseUrl;
-        const downloadAttribute = isDownload ? 'download' : ''; // Adiciona o atributo de download
-
+        const downloadAttribute = isDownload ? 'download' : '';
 
         card.innerHTML = `
             <div class="image-container">
-                <img src="${this.escapeHtml(course.imageUrl)}" 
-                    alt="${this.escapeHtml(course.title)}"
-                    onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg'">
+                <img src="${this.escapeHtml(course.imageUrl)}" alt="${this.escapeHtml(course.title)}" onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg'">
             </div>
             <div class="course-info">
                 <h3>${this.escapeHtml(course.title)}</h3>
                 <p class="course-category">${this.escapeHtml(course.category)}</p>
                 <p>${this.escapeHtml(course.description)}</p>
-                <a href="${this.escapeHtml(buttonUrl)}" 
-                    target="_blank" 
-                    class="btn btn-secondary"
-                    rel="noopener noreferrer"
-                    ${downloadAttribute}>  ${this.escapeHtml(buttonText)}
+                <a href="${this.escapeHtml(buttonUrl)}" target="_blank" class="btn btn-secondary" rel="noopener noreferrer" ${downloadAttribute}>
+                    ${this.escapeHtml(buttonText)}
                 </a>
-            </div>
-        `;
-
+            </div>`;
         return card;
-    }
-
-    getButtonText(url) {
-        // Determine button text based on URL or default to "Saiba Mais"
-        if (url.includes('download') || url.includes('.pdf') || url.includes('.docx') || url.includes('.xlsx')) {
-            return 'Baixar';
-        }
-        return 'Inscreva-se';
     }
 
     animateCourseCards() {
         const cards = document.querySelectorAll('.course-card');
-        
-        // Use Intersection Observer for better performance
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-card');
-                    }, index * 100);
+                    setTimeout(() => entry.target.classList.add('animate-card'), index * 100);
                     observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '50px'
-        });
-
-        cards.forEach(card => {
-            observer.observe(card);
-        });
+        }, { threshold: 0.1 });
+        cards.forEach(card => observer.observe(card));
     }
 
     escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
+        if (typeof text !== 'string') return '';
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
         return text.replace(/[&<>"']/g, m => map[m]);
     }
 }
 
-// CSS for loading and error states
+// Adiciona os estilos para os estados de carregamento/erro/vazio
 const courseLoaderStyles = `
-    .loading-courses,
-    .error-courses,
-    .no-courses {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 3rem 1rem;
-        color: #666;
+    .loading-courses, .error-courses, .no-courses {
+        grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: #666;
     }
-
     .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #4b5320;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 1rem;
+        width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #4b5320;
+        border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;
     }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .error-icon,
-    .no-courses-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    .error-courses h3,
-    .no-courses h3 {
-        color: #2e3d28;
-        margin-bottom: 0.5rem;
-        font-family: 'PT Serif', serif;
-    }
-
-    .error-courses p,
-    .no-courses p {
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-    }
-
-    .course-card {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.6s ease;
-    }
-
-    .course-card.animate-card {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .error-icon, .no-courses-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .error-courses h3, .no-courses h3 { color: #2e3d28; margin-bottom: 0.5rem; font-family: 'PT Serif', serif; }
+    .course-card { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .course-card.animate-card { opacity: 1; transform: translateY(0); }
 `;
-
-// Inject styles
 const styleSheet = document.createElement('style');
 styleSheet.textContent = courseLoaderStyles;
 document.head.appendChild(styleSheet);
 
-// Initialize course loader when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new CourseLoader();
 });
