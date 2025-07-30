@@ -215,6 +215,11 @@ header.header-visible {
     gap: 1rem;
 }
 
+/* Mobile menu items - hidden by default */
+.mobile-menu-items {
+    display: none;
+}
+
 .search-container {
     position: relative;
     transition: transform 0.3s ease;
@@ -1046,6 +1051,7 @@ footer::before {
           transition: all 0.3s ease;
           z-index: 99;
           box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          padding-bottom: 1rem;
      }
      .main-nav.active {
           transform: translateY(0);
@@ -1076,6 +1082,44 @@ footer::before {
           background: rgba(255,255,255,0.1);
      }
 
+     /* Mobile menu items - show in mobile menu */
+     .mobile-menu-items {
+          display: block;
+          padding: 1rem 0;
+          border-top: 1px solid rgba(255,255,255,0.1);
+     }
+     
+     .mobile-menu-items .btn {
+          display: block;
+          width: calc(100% - 4rem);
+          margin: 0.5rem 2rem;
+          text-align: center;
+          padding: 1rem;
+          border-radius: 8px;
+          text-decoration: none;
+          font-size: 1rem;
+     }
+     
+     .mobile-menu-items .btn-login {
+          background-color: var(--primary-blue);
+          color: var(--white);
+          border: 2px solid var(--primary-blue);
+          min-width: auto;
+     }
+     
+     .mobile-menu-items .btn-login.logged-in {
+          background: rgba(255,255,255,0.95) !important;
+          color: var(--dark-blue-text) !important;
+          border: 2px solid rgba(255,255,255,0.95) !important;
+          text-align: center !important;
+          min-width: auto !important;
+     }
+     
+     .mobile-menu-items .btn-admin {
+          background-color: #0069d9;
+          color: var(--white);
+          border: 2px solid #0069d9;
+     }
      /* Header Right & Actions */
      .header-right {
           order: 2;
@@ -1083,23 +1127,15 @@ footer::before {
      .header-actions {
           gap: 0.5rem;
      }
-     .search-container {
+     
+     /* Hide desktop buttons in mobile */
+     .header-actions .btn-login,
+     .header-actions .btn-admin {
           display: none;
      }
-     .btn-login {
-          padding: 0.5rem 1rem;
-          font-size: 0.8rem;
-          min-width: 80px;
-     }
-     .btn-login.logged-in {
-          min-width: 120px;
-          font-size: 0.75rem;
-     }
-     .user-name-header {
-          font-size: 0.75rem;
-     }
-     .user-type-header {
-          font-size: 0.65rem;
+     
+     .search-container {
+          display: none;
      }
 
      /* Hero Section */

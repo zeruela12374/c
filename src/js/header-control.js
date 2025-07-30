@@ -77,6 +77,14 @@ class HeaderController {
             this.toggleMobileMenu();
         });
 
+        // Setup mobile login button
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        if (mobileLoginBtn) {
+            mobileLoginBtn.addEventListener('click', () => {
+                this.handleMobileLogin();
+            });
+        }
+
         // Alternar configurações
         this.settingsToggle.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -107,6 +115,12 @@ class HeaderController {
             });
         });
 
+        // Close mobile menu when clicking on mobile menu buttons
+        document.querySelectorAll('.mobile-menu-items .btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.closeMobileMenu();
+            });
+        });
         // Manipulador de rolagem para cabeçalho dinâmico
         let scrollTimeout;
         window.addEventListener('scroll', () => {
@@ -164,6 +178,46 @@ class HeaderController {
         this.mobileToggle.classList.remove('active');
         this.mobileNav.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    handleMobileLogin() {
+        // Get the main login button functionality
+        const mainLoginBtn = document.getElementById('headerLoginBtn');
+        if (mainLoginBtn) {
+            // Trigger the same click event as the main login button
+            mainLoginBtn.click();
+        } else {
+            // Fallback - redirect to login page
+            const userData = localStorage.getItem('capacitaTgUser');
+            if (userData) {
+                // If logged in, show user profile modal
+                const user = JSON.parse(userData);
+                if (typeof showModal === 'function') {
+                    document.getElementById('modalUserName').textContent = user.nome;
+                    document.getElementById('modalUserEmail').textContent = user.email;
+                    document.getElementById('modalUserType').textContent = 
+                        user.tipoUsuario === 'atirador' ? 'Atirador' : 'Empregador';
+                    showModal('userProfileModal');
+                }
+            } else {
+                // If not logged in, redirect to login page
+                window.location.href = 'entrar.html';
+            }
+        }
+    }
+
+    // Update mobile login button state
+    updateMobileLoginButton(user, isLoggedIn) {
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        if (!mobileLoginBtn) return;
+        
+        if (isLoggedIn && user) {
+            mobileLoginBtn.textContent = `${user.nome.split(' ')[0]} ${user.nome.split(' ')[1] || ''}`;
+            mobileLoginBtn.classList.add('logged-in');
+        } else {
+            mobileLoginBtn.textContent = 'Acessar';
+            mobileLoginBtn.classList.remove('logged-in');
+        }
     }
 
     toggleSettings() {
